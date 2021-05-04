@@ -100,6 +100,18 @@ double finger_print(char* seq,int prime,int size){
 int find_gene_classic(char* seq,int size, char dnasequence[SIZE]){
 	int found=0;
     // TODO: Dizinin her bir elemani ile seq karsilastir.
+   for(int i = 0; i<SIZE; i++){
+      if(dnasequence[i]==seq[0]){
+         found=1;
+         for(int j = 1; j<size; j++){
+            if(dnasequence[i+j]!=seq[j]){
+               found=0;
+               break;
+            }
+         }
+         if(found==1) break;
+      }
+   }
 	// varsa found=1 olarak dondur.
 	return found;
 }
