@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<string.h>
+
+#include"database.h"
+#include"sequence.h"
+
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+
+/*
+ * Verilen iki char dizisinin benzerligini bulur.
+ * Bu islemi Levenshtein uzakligi kullanarak yapar.
+ */
+int find_distance(char* seq1,char* seq2){
+   int distance, replace, insert, delete;
+   int lenSeq1 = strlen(seq1), lenSeq2 = strlen(seq2);
+   int** matrix = malloc((lenSeq1+1)*sizeof(int *));
+   for(int i = 0; i <= lenSeq1; ++i) matrix[i] = malloc((lenSeq2+1)*sizeof(int));
+   for(int i = 0; i <= lenSeq1; ++i) matrix[i][0] = i;
+   for(int j = 0; j <= lenSeq2; ++j) matrix[0][j] = j;
+
+   for(int i = 1; i <= lenSeq1; ++i){
+      for(int j = 1; j <= lenSeq2; ++j){
+         if(seq1[i-1]!=seq2[j-1]){
+            if(i == j && i == 1){
+               matrix[i][j] = 1;
+               continue;
+            }
+            replace = matrix[i-1][j-1];
+            delete = matrix[i-1][j];
+            insert = matrix[i][j-1];
+            replace = MIN(replace, insert);
+            replace = MIN(replace, delete);
+            matrix[i][j] = replace + 1;
+         }else{
+            matrix[i][j] = matrix[i-1][j-1];
+         }
+      }
+   }
+   distance = matrix[lenSeq1][lenSeq2];
+   for(int i = 0; i <= lenSeq1; ++i)free(matrix[i]);
+   free(matrix);
+   return distance;
+}
+
+/*
+ * Parametre olarak verilen karakter dizisine
+ * veri tabanı içerisinde benzeyen ilk k
+ * kişi idsini geri döndürür.
+ * Bu idler bir dizide saklanır.
+ * En benzer idler, uzakligi en dusuk olanlardir.
+ */
+int* find_similar_first(char* seq1, Dtbase* dbt,int k){
+	int* similar_ids = malloc(sizeof(int)*k);
+
+   return similar_ids;
+}
+
+/*
+ * Parametre olarak verilen dizi icin
+ * Rabin parmakizini hesaplar.
+ * seq  : parmakizi hesaplanacaj deger
+ * prime: kullanilacak asal sayi
+ * size : seq dizisinin boyutu
+ * Ornek: dizi  = abr prime=101 ise
+ *        sonuc = 97*101^2 + 98*101^1 + 114*101^0 = 999509
+ *
+ */
+double finger_print(char* seq,int prime,int size){
+    int i;
+    double sum = 0;
+    for(i=0;i<size;i++){
+       sum += seq[i]*pow(prime,(size-i-1));
+    }
+    return sum;
+  }
+
+/*
+ * Verilen bir gen dizisini DNA dizisi içerisinde arar.
+ * Klasik string arama algoritmasini kullanir.
+ * seq         : aranacak dizi
+ * size        : seq dizisinin boyutu
+ * dnaseqeunce : seq geninin aranacagi DNA dizisi
+ * Gen bulunursa fonksiyon found=1 dondurur, bulunamazsa found=0.
+ * Ornek : seq = ACG size = 3 dnaSequence = TTGACGT found=1
+ *         seq = ACG size = 3 dnaSequence = TTGAGGT found=0
+ */
+int find_gene_classic(char* seq,int size, char dnasequence[SIZE]){
+	int found=0;
+    // TODO: Dizinin her bir elemani ile seq karsilastir.
+	// varsa found=1 olarak dondur.
+	return found;
+}
+
+/*
+ * Verilen bir gen dizisini DNA dizisi içerisinde arar.
+ * Rabin-Karp string arama algoritmasini kullanir.
+ * seq         : aranacak dizi
+ * size        : seq dizisinin boyutu
+ * dnaseqeunce : seq geninin aranacagi DNA dizisi
+ * Gen bulunursa fonksiyon found=1 dondurur, bulunamazsa found=0.
+ * Ornek : seq = ACG size = 3 dnaSequence = TTGACGT found=1
+ *         seq = ACG size = 3 dnaSequence = TTGAGGT found=0
+ */
+int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
+	int found=0;
+	// TODO: algoritma detayi icin pdf e bakiniz.
+    return found;
+}
+
+/*
+ * Parametre olarak verilen gen dizisini bir veri tabani
+ * icinde arar, diziye sahip bireylerin idsini geri döndürür.
+ */
+int *find_gene_persons(char* seq,int size,Dtbase db){
+   int* ids;
+   // TODO: her bir eleman icin DNA dizisi icinde seq
+   // degerini ara. find_gene fonksiyonlarindan biri ile
+   // Eger seq dizisi varsa id sini ids dizisinde sakla.
+   return ids;
+
+}
