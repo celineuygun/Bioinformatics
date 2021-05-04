@@ -59,13 +59,6 @@ int main(){
    printf("Uzaklik testlerini gecti\n");
 
    // TODO: find_similarity icin test durumu:
-   /*
-   printf("%s\n", dbt->db[0].sequence);
-   printf("%d\n", find_distance("ATG","ACGACCCACGACCCACGACC"));
-   printf("%d\n", find_distance("ACGACCCACGACCCACGACC","ATG"));
-   printf("%d\n\n", find_distance("ATG",dbt->db[0].sequence));
-   */
-   
    printf("Benzerlik icin verilen dizi ATG\n");
    find_similar_first("ATG",dbt,2);
    int* ids = find_similar_first("ATG",dbt,2);
