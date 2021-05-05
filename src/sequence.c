@@ -127,8 +127,24 @@ int find_gene_classic(char* seq,int size, char dnasequence[SIZE]){
  *         seq = ACG size = 3 dnaSequence = TTGAGGT found=0
  */
 int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
-	int found=0;
-	// TODO: algoritma detayi icin pdf e bakiniz.
+// TODO: algoritma detayi icin pdf e bakiniz.
+  
+   int found=0;
+   double hashseq=0.0;
+   double hashdna=0.0;
+   int i=0,j=0;
+   hashseq=finger_print(seq,prime,size);
+   for(i=0;i<SIZE-size;i++){
+     hashdna=finger_print(&dnasequence[i],prime,size);
+      if(hashseq==hashdna){
+         for(j=0;j<size;j++){
+            if(dnasequence[i+j]!=seq[j]){
+               break;
+            }
+         }
+       found=1;
+      }
+   }
     return found;
 }
 

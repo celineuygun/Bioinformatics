@@ -65,10 +65,9 @@ int main(){
    assert(ids[0] == 3);
    assert(ids[1] == 6);
    printf("Benzerlik testini gecti\n");
-
    // TODO: Arama testleri
-   // assert(find_gene_rabinkarp("GGCA",4,"ACGTACCGTGGGCAACGAAT",101)==1);
-   // assert(find_gene_rabinkarp("GCCA",4,"ACGTACCGTGGGCAACGAAT",101)==0);
+   assert(find_gene_rabinkarp("GGCA",4,"ACGTACCGTGGGCAACGAAT",101)==1);
+   assert(find_gene_rabinkarp("GCCA",4,"ACGTACCGTGGGCAACGAAT",101)==0);
    assert(find_gene_classic("GGCA",4,"ACGTACCGTGGGCAACGAAT")==1);
    assert(find_gene_classic("GCCA",4,"ACGTACCGTGGGCAACGAAT")==0);
    printf("Arama testlerini gecti\n");
