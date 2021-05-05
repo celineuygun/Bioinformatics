@@ -42,8 +42,7 @@
 #include<assert.h>
 
 int main(){
-   int i=0;
-   char* filename="database.txt";
+   char* filename="testDb";
    //TODO: Dosya okuma fonksiyonunu cagirip
    // Dogru sayida eleman okuyup okumadigini test ediniz.
    // ekrana basarak kontrol yapiniz.
@@ -51,7 +50,7 @@ int main(){
    print_database(dbt);
    print_double_helix(dbt->db[0]);
 
-   printf("size: %d\n",dbt->size);
+   
    // TODO: assertion kullanarak yazdiginiz fonksiyonlari
    // test ediniz.
    assert(find_distance("merhaba","merhaba") == 0);
@@ -72,7 +71,8 @@ int main(){
    assert(find_gene_classic("GGCA",4,"ACGTACCGTGGGCAACGAAT")==1);
    assert(find_gene_classic("GCCA",4,"ACGTACCGTGGGCAACGAAT")==0);
    printf("Arama testlerini gecti\n");
-
-  find_gene_persons("CATGCGG",7,*dbt);
+   
+    find_gene_persons("AAT",dbt->size,*dbt);
+     
    return 0;
 }
