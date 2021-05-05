@@ -153,10 +153,19 @@ int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
  * icinde arar, diziye sahip bireylerin idsini geri döndürür.
  */
 int *find_gene_persons(char* seq,int size,Dtbase db){
-   int* ids;
+   int *ids=malloc(sizeof(int));
    // TODO: her bir eleman icin DNA dizisi icinde seq
    // degerini ara. find_gene fonksiyonlarindan biri ile
    // Eger seq dizisi varsa id sini ids dizisinde sakla.
+  int i=0,a=0;
+  char array[SIZE];
+  for(i=0;i<db.size;i++){
+     strcpy(&array[i],db.db[i].sequence);
+     a=find_gene_rabinkarp(seq,size,&array[i],101);
+     if(a==1){   
+        ids[i]=db.db[i].id;  
+          printf("id: %d\n",ids[i]);
+  }
+}
    return ids;
-
 }
