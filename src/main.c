@@ -43,7 +43,7 @@
 
 int main(){
    int i=0;
-   char* filename="testDb";
+   char* filename="database.txt";
    //TODO: Dosya okuma fonksiyonunu cagirip
    // Dogru sayida eleman okuyup okumadigini test ediniz.
    // ekrana basarak kontrol yapiniz.
@@ -73,6 +73,6 @@ int main(){
    assert(find_gene_classic("GCCA",4,"ACGTACCGTGGGCAACGAAT")==0);
    printf("Arama testlerini gecti\n");
 
-  find_gene_persons("TCC",3,*dbt);
+  find_gene_persons("CATGCGG",7,*dbt);
    return 0;
 }
