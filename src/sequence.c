@@ -161,8 +161,7 @@ int *find_gene_persons(char* seq,int size,Dtbase dbt){
   int i=0;
   for(i=0;i<dbt.size;i++){
      int a=find_gene_rabinkarp(seq,size,dbt.db[i].sequence,101);
-     int b=find_gene_rabinkarp(seq,size,dbt.db[i].pair,101);
-     if(a+b>=1){
+     if(a==1){
         ids[i]=dbt.db[i].id; 
         printf("id: %d\n",ids[i]); 
         count++;

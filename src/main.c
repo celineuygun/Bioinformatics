@@ -48,7 +48,8 @@ int main(){
    // Dogru sayida eleman okuyup okumadigini test ediniz.
    // ekrana basarak kontrol yapiniz.
    Dtbase *dbt= read_person_file(filename);
-   print_database(dbt);
+    printf("Veri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
+  // print_database(dbt);
    print_double_helix(dbt->db[0]);
 
    
@@ -75,7 +76,8 @@ int main(){
   
    printf("enter the gene code: \n");
    scanf("%s",gen_seq);
-   find_gene_persons(gen_seq,dbt->size,*dbt);
+   int length=strlen(gen_seq);
+   find_gene_persons(gen_seq,length,*dbt);
      
    return 0;
 }
