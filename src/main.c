@@ -42,6 +42,7 @@
 #include<assert.h>
 
 int main(){
+      char gen_seq[SIZE/5];
    char* filename="testDb";
    //TODO: Dosya okuma fonksiyonunu cagirip
    // Dogru sayida eleman okuyup okumadigini test ediniz.
@@ -71,8 +72,10 @@ int main(){
    assert(find_gene_classic("GGCA",4,"ACGTACCGTGGGCAACGAAT")==1);
    assert(find_gene_classic("GCCA",4,"ACGTACCGTGGGCAACGAAT")==0);
    printf("Arama testlerini gecti\n");
-   
-    find_gene_persons("AAT",dbt->size,*dbt);
+  
+   printf("enter the gene code: \n");
+   scanf("%s",gen_seq);
+   find_gene_persons(gen_seq,dbt->size,*dbt);
      
    return 0;
 }
