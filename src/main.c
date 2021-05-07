@@ -48,8 +48,8 @@ int main(){
    // Dogru sayida eleman okuyup okumadigini test ediniz.
    // ekrana basarak kontrol yapiniz.
    Dtbase *dbt= read_person_file(filename);
-    printf("Veri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
-  // print_database(dbt);
+   printf("Veri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
+   print_database(dbt);
    print_double_helix(dbt->db[0]);
 
    
@@ -67,17 +67,22 @@ int main(){
    assert(ids[0] == 3);
    assert(ids[1] == 6);
    printf("Benzerlik testini gecti\n");
-   // TODO: Arama testleri
+
+   //TODO: Arama testleri
    assert(find_gene_rabinkarp("GGCA",4,"ACGTACCGTGGGCAACGAAT",101)==1);
    assert(find_gene_rabinkarp("GCCA",4,"ACGTACCGTGGGCAACGAAT",101)==0);
    assert(find_gene_classic("GGCA",4,"ACGTACCGTGGGCAACGAAT")==1);
    assert(find_gene_classic("GCCA",4,"ACGTACCGTGGGCAACGAAT")==0);
    printf("Arama testlerini gecti\n");
-  
-   printf("enter the gene code: \n");
-   scanf("%s",gen_seq);
-   int length=strlen(gen_seq);
-   find_gene_persons(gen_seq,length,*dbt);
-     
-   return 0;
+
+
+   ids=find_gene_persons("TTA",3,*dbt);
+    assert(ids[0] == 6);
+    assert(ids[1] == 7);
+    printf("Gen bulma testlerini gecti\n");
+
+
+return 0;
+
 }
+

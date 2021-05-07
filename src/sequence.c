@@ -154,19 +154,22 @@ int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
  */
 int *find_gene_persons(char* seq,int size,Dtbase dbt){
    int *ids=malloc(sizeof(int)*dbt.size);
-   int count=0;
    // TODO: her bir eleman icin DNA dizisi icinde seq
    // degerini ara. find_gene fonksiyonlarindan biri ile
    // Eger seq dizisi varsa id sini ids dizisinde sakla.
-  int i=0;
+  int i=0,say=0,find=0,count=0,j=0;
   for(i=0;i<dbt.size;i++){
-     int a=find_gene_rabinkarp(seq,size,dbt.db[i].sequence,101);
-     if(a==1){
-        ids[i]=dbt.db[i].id; 
-        printf("id: %d\n",ids[i]); 
-        count++;
-  }
-}
-printf("%d people have the gene\n",count);
+      find=find_gene_rabinkarp(seq,size,dbt.db[i].sequence,101);
+     if(find==1){
+        say=i;
+         count++;
+          while(j<count){
+      ids[j]=dbt.db[say].id;
+                  j++;
+                  }
+               }
+          }
+   //printf("Number of total people who have the same gene sequence: %d\n",count);
    return ids;
 }
+
