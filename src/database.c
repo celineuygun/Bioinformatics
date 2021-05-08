@@ -15,7 +15,7 @@ Dtbase* read_person_file(char* filename){
    int lenBuf = 0, idNo, j=0;
    char name[NSIZE], first[SIZE], second[SIZE];
    FILE *fp = fopen(filename, "r");
-   if(!fp){printf("Error while opening the file.");exit(1);}
+   if(!fp){printf("Dosya acilamadi. Dogru dosya ismini girdiginizden emin olun.\n"); exit(1);}
    while(fgets(buffer, BUFFER_SIZE, fp) != NULL){
       lenBuf = strlen(buffer);
       buffer[lenBuf - 1] = (buffer[lenBuf - 1] == '\n') ? '\0' : buffer[lenBuf - 1];                       
@@ -74,4 +74,14 @@ void print_double_helix(Person db){
       printf("\n");
    }
    printf("\n");
+}
+
+int binary_search(Dtbase* dbt, int l, int r, int n){
+   if(l <= r){
+      int m = (l + r)/2;
+      if(dbt->db[m].id == n) return m;
+      else if(dbt->db[m].id < n) binary_search(dbt, m + 1, r, n);
+      else binary_search(dbt, l, m - 1, n);
+   }
+   return -1;
 }

@@ -23,5 +23,6 @@ typedef struct DB{
 Dtbase* read_person_file(char* filename);
 void print_database(Dtbase* db);
 void print_double_helix(Person db);
+int binary_search(Dtbase* dbt, int l, int r, int n);
 
 #endif /* SRC_DATABASE_H_ */

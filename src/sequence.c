@@ -55,11 +55,16 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
 	int* similar_ids = malloc(sizeof(int)*k);
    int min, index = 0;
 
-   for(int j = 0; j<k; j++){
+   for(int j = 0; j < k; j++){
       min = find_distance(seq1,dbt->db[j].sequence);
-      for(int i = j+1; i<dbt->size; i++){
-         if(min>find_distance(seq1,dbt->db[i].sequence)){
-            min = find_distance(seq1,dbt->db[i].sequence);
+      for(int i = j+1; i < dbt->size; ++i){
+         if(min > find_distance(seq1, dbt->db[i].sequence)){
+            int flag = 0;
+            for(int p = 0; p < j; ++p){
+               if(dbt->db[i].id == similar_ids[p]){flag = 1; break;}
+            }
+            if(flag == 1) continue;
+            min = find_distance(seq1, dbt->db[i].sequence);
             index = i;
          } 
       }
@@ -99,7 +104,6 @@ double finger_print(char* seq,int prime,int size){
  */
 int find_gene_classic(char* seq,int size, char dnasequence[SIZE]){
 	int found=0;
-    // TODO: Dizinin her bir elemani ile seq karsilastir.
    for(int i = 0; i<SIZE; i++){
       if(dnasequence[i]==seq[0]){
          found=1;
@@ -127,8 +131,6 @@ int find_gene_classic(char* seq,int size, char dnasequence[SIZE]){
  *         seq = ACG size = 3 dnaSequence = TTGAGGT found=0
  */
 int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
-// TODO: algoritma detayi icin pdf e bakiniz.
-  
    int found=0;
    double hashseq=0.0;
    double hashdna=0.0;
@@ -154,22 +156,18 @@ int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
  */
 int *find_gene_persons(char* seq,int size,Dtbase dbt){
    int *ids=malloc(sizeof(int)*dbt.size);
-   // TODO: her bir eleman icin DNA dizisi icinde seq
-   // degerini ara. find_gene fonksiyonlarindan biri ile
-   // Eger seq dizisi varsa id sini ids dizisinde sakla.
-  int i=0,say=0,find=0,count=0,j=0;
-  for(i=0;i<dbt.size;i++){
-      find=find_gene_rabinkarp(seq,size,dbt.db[i].sequence,101);
-     if(find==1){
-        say=i;
-         count++;
-          while(j<count){
-      ids[j]=dbt.db[say].id;
-                  j++;
-                  }
-               }
-          }
-   //printf("Number of total people who have the same gene sequence: %d\n",count);
-   return ids;
+   int i=0,say=0,find=0,count=0,j=0;
+   for(i=0;i<dbt.size;i++){
+       find=find_gene_rabinkarp(seq,size,dbt.db[i].sequence,101);
+      if(find==1){
+         say=i;
+          count++;
+           while(j<count){
+       ids[j]=dbt.db[say].id;
+                   j++;
+                   }
+                }
+           }
+    //printf("Number of total people who have the same gene sequence: %d\n",count);
+    return ids;
 }
-
