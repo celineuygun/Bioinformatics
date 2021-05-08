@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "database.h"
+#include "sequence.h"
 #define BUFFER_SIZE 100
 
 /*
@@ -76,12 +77,15 @@ void print_double_helix(Person db){
    printf("\n");
 }
 
-int binary_search(Dtbase* dbt, int l, int r, int n){
+void find_binary(Dtbase* dbt, int l, int r, int n, char* dna_seq){
    if(l <= r){
       int m = (l + r)/2;
-      if(dbt->db[m].id == n) return m;
-      else if(dbt->db[m].id < n) binary_search(dbt, m + 1, r, n);
-      else binary_search(dbt, l, m - 1, n);
+      if(dbt->db[m].id == n){
+         print_double_helix(dbt->db[m]); 
+         printf("DISTANCE: %d\n", find_distance(dna_seq, dbt->db[m].sequence));
+         return;
+      }
+      else if(dbt->db[m].id < n) find_binary(dbt, m + 1, r, n, dna_seq);
+      else find_binary(dbt, l, m - 1, n, dna_seq);
    }
-   return -1;
 }

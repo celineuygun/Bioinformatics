@@ -58,7 +58,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    for(int j = 0; j < k; j++){
       min = find_distance(seq1,dbt->db[j].sequence);
       for(int i = j+1; i < dbt->size; ++i){
-         if(min > find_distance(seq1, dbt->db[i].sequence)){
+         if(min >= find_distance(seq1, dbt->db[i].sequence)){
             int flag = 0;
             for(int p = 0; p < j; ++p){
                if(dbt->db[i].id == similar_ids[p]){flag = 1; break;}

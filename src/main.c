@@ -32,14 +32,9 @@ int main(int argc,char* argv[]){
     int *ids = malloc(sizeof(int) * k);  
     ids = find_similar_first(dna_seq, dbt, k);
     printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
-    Person p;
     for(int i = 0, j; i < k; ++i){
-        for(j = 0; j < dbt->size; ++j){
-            if(ids[i] == dbt->db[j].id){print_double_helix(dbt->db[j]); break;}
-        }
-        printf("DISTANCE: %d\n", find_distance(dna_seq, dbt->db[j].sequence));
+        find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq);
     }
-    for(int i = 0; i < k; ++i) printf("%d\n", ids[i]);
 	
     // TODO: Kullanicidan bir gen dizisi isteyin.
     // printf("Geni bulmak icin bir gen dizisini giriniz: ");
