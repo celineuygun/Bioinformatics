@@ -57,7 +57,7 @@ int main(int argc, char* argv[]){
       find_binary(dbt,0,dbt->size-1,ids[i],dna_seq);
       i++;
       }
-	    break;
+      break;
 
       case 3:
       printf("\n Ayni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz.\n>> ");
