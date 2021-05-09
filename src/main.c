@@ -49,13 +49,13 @@ int main(int argc, char* argv[]){
       ids = realloc(ids, sizeof(int) * k);
       ids = find_similar_first(dna_seq, dbt, k);
       printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
+       i=0;
       while(1){
-       if(ids[k]==ids[k+1]){
-       k--;
-      }
-       if(k<0) break;
-       find_binary(dbt,0,dbt->size-1,ids[k],dna_seq);
-       k--; 
+       if(ids[i]==ids[i+1])
+         i++;
+        if(k<i+1) break;
+       find_binary(dbt,0,dbt->size-1,ids[i],dna_seq);
+      i++;
       }
       /*for(int i = 0, j; i < k; ++i){
         find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq);
@@ -83,6 +83,10 @@ int main(int argc, char* argv[]){
           printf("\nAyrintili DNA bilgisini gormek istediginiz kisi varsa lutfen ID listesindeki sira numarasini giriniz. Yoksa 0'a basarak cikis yapabilirsiniz.\n>> ");
           scanf("%d",&y);
           if(y==0) break;
+          if(y>i){
+          printf("Liste boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor \n");
+          break;
+          }
           find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq);
         }
       }
