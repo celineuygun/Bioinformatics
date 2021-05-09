@@ -63,12 +63,12 @@ printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz: \n");
 	 break;
 
    case 3:
-printf("\n Gene sahip olan insalari bulmak icin bir gen dizisi giriniz: \n");
+printf("\n Ayni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz: \n");
        scanf("%s", gen_seq);
         int length=strlen(gen_seq);
     ids = realloc(ids, sizeof(int) * 100);
          ids = find_gene_persons(gen_seq,length , *dbt);
-    printf("\nAyni gene sahip insanlarin ID listesini gormek istiyorsaniz,  1'e, istemiyorsaniz 0'a basiniz.\n");
+    printf("\nAyni gene sahip insanlarin ID listesini gormek istiyorsaniz 1'e, istemiyorsaniz 0'a basiniz.\n");
     int x=0;
        scanf("%d",&x);
              if(x==1){
@@ -81,7 +81,7 @@ printf("\n Gene sahip olan insalari bulmak icin bir gen dizisi giriniz: \n");
                            }
                      while(1){
               int y=0;
-           printf("\nAyrintili DNA bilgisini gormek istediginiz birey varsa lutfen ID listesindeki sira numarasini giriniz. Yoksa 0'a basarak cikis yapabilirsiniz. \n");
+           printf("\nAyrintili DNA bilgisini gormek istediginiz kisi varsa lutfen ID listesindeki sira numarasini giriniz. Yoksa 0'a basarak cikis yapabilirsiniz. \n");
                 scanf("%d",&y);
                 if(y==0){
                   break;
