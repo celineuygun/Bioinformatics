@@ -40,34 +40,7 @@ int main(int argc, char* argv[]){
       case 1:
         print_database(dbt);
         break;
-
       case 2:
-<<<<<<< HEAD
-      printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz.\n>> ");
-      scanf("%s", dna_seq);
-      printf("En cok benzer kac tane veri istiyorsunuz?\n>> ");
-      scanf("%d", &k);
-      ids = realloc(ids, sizeof(int) * k);
-      ids = find_similar_first(dna_seq, dbt, k);
-      printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
-      i=0;
-      while(i != k){
-      find_binary(dbt,0,dbt->size-1,ids[i],dna_seq);
-      i++;
-      }
-      break;
-
-      case 3:
-      printf("\n Ayni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz.\n>> ");
-      scanf("%s", gen_seq);
-      int length=strlen(gen_seq);
-      ids = realloc(ids, sizeof(int) * 100);
-      ids = find_gene_persons(gen_seq,length , *dbt);
-      printf("\nAyni gene sahip insanlarin ID listesini gormek istiyorsaniz 1'e, istemiyorsaniz 0'a basiniz.\n>> ");
-      int x=0;
-      scanf("%d",&x);
-      if(x==1){
-=======
         printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz.\n>> ");
         scanf("%s", dna_seq);
         printf("En cok benzer kac tane veri istiyorsunuz?\n>> ");
@@ -75,7 +48,6 @@ int main(int argc, char* argv[]){
         ids = realloc(ids, sizeof(int) * k);
         ids = find_similar_first(dna_seq, dbt, k);
         printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
->>>>>>> 422f5cc6a2ef68d5525f162523ec2f45c673d6b8
         i=0;
         while(1){
         if(ids[i]==ids[i+1])
