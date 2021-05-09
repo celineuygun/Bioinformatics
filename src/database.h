@@ -7,6 +7,11 @@
 #define NSIZE 25
 #define DBSIZE 50000
 
+typedef struct hash {
+  int id;
+  struct hash *next;
+} Hash;
+
 typedef struct PRS{
     char sequence[SIZE];
     char pair[SIZE];

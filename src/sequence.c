@@ -53,8 +53,8 @@ int find_distance(char* seq1,char* seq2){
  */
 int* find_similar_first(char* seq1, Dtbase* dbt,int k){
 	int* similar_ids = malloc(sizeof(int)*k);
-   int min, index = 0;
-
+   //int min, index = 0;
+/*
    for(int j = 0; j < k; j++){
       min = find_distance(seq1,dbt->db[j].sequence);
       for(int i = j+1; i < dbt->size; ++i){
@@ -70,6 +70,26 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
       }
       similar_ids[j] = dbt->db[index].id;
    }
+   */
+   int j, count = 0;
+   Hash* hashtable[SIZE];
+   for(int i = 0; i<dbt->size; i++){
+      int hashIndex = find_distance(seq1,dbt->db[i].sequence);
+      while(hashtable[hashIndex] != NULL){
+         hashtable[hashIndex] = hashtable[hashIndex]->next;
+      }
+      hashtable[hashIndex]->id = dbt->db->id;
+   }
+
+   for(j = 0; j<SIZE; j++){
+      for(Hash* curr = hashtable[k]; curr != NULL; curr = curr->next){
+         similar_ids[count] = curr->id;
+         count++;
+      }
+      if(count == k) break;
+   }
+   
+   
    return similar_ids;
 }
 
