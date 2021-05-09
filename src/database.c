@@ -48,9 +48,9 @@ Dtbase* read_person_file(char* filename){
  * ekrana basar.
  */
 void print_database(Dtbase* dbt){
-   printf("\n=========== DATABASE INFO\nSIZE: %25d\nCORRUPTED: %20d\n", dbt->size, dbt->corrupted);
+   printf("\n====== VERITABANI BILGISI\nBOYUT: %24d\nHATALI DNA: %20d\n", dbt->size, dbt->corrupted);
    for(int i = 0; i < dbt->size; ++i){
-      printf("\n============= PERSON INFO\nID: %27d\nNAME: %25s\nSEQUENCE:  %20s\nPAIR:      %20s\n", 
+      printf("\n============ KISI BILGISI\nID: %27d\nISIM: %25s\nSEQUENCE:  %20s\nPAIR:      %20s\n", 
                                                             dbt->db[i].id, dbt->db[i].name, dbt->db[i].sequence, dbt->db[i].pair);
    }
 }
@@ -60,7 +60,7 @@ void print_database(Dtbase* dbt){
  * bilgilerini ve dna cift sarmal yapisini basar.
  */
 void print_double_helix(Person db){
-   printf("\n============= PERSON INFO\nID: %27d\nNAME: %25s\nDNA:\n\n", db.id, db.name);
+   printf("\n============ KISI BILGISI\nID: %27d\nISIM: %25s\nDNA:\n\n", db.id, db.name);
    for(int j = 0; db.sequence[j] != '\0' || db.pair[j] != '\0'; ++j){
       if(j % 4 == 0){
          if((j/4)%2==0)printf("  %c%c", db.sequence[j], db.pair[j]);
@@ -82,7 +82,7 @@ void find_binary(Dtbase* dbt, int l, int r, int n, char* dna_seq){
       int m = (l + r)/2;
       if(dbt->db[m].id == n){
          print_double_helix(dbt->db[m]); 
-         printf("DISTANCE: %d\n", find_distance(dna_seq, dbt->db[m].sequence));
+         printf("UZAKLIK: %d\n", find_distance(dna_seq, dbt->db[m].sequence));
          return;
       }
       else if(dbt->db[m].id < n) find_binary(dbt, m + 1, r, n, dna_seq);
