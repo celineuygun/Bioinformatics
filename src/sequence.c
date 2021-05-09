@@ -52,11 +52,13 @@ int find_distance(char* seq1,char* seq2){
  * En benzer idler, uzakligi en dusuk olanlardir.
  */
 int* find_similar_first(char* seq1, Dtbase* dbt,int k){
-  int* similar_ids = calloc(k, sizeof(int));
+   int* similar_ids = calloc(k, sizeof(int));
+   if(!similar_ids) exit(1);
    int count = 0;
-   Hash* hashtable[SIZE];
+   Hash *hashtable[SIZE], *next;
    for (int p=0; p<SIZE; p++){
       hashtable[p] = calloc(1, sizeof(Hash));
+      if(!hashtable[p]) exit(1);
       hashtable[p]->id = -1;
       hashtable[p]->next = NULL;
    } 
@@ -69,7 +71,8 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
       if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
       else{
          for(cur = hash_node; cur->next != NULL; cur = cur->next);
-         Hash* next = calloc(1, sizeof(Hash));
+         next = calloc(1, sizeof(Hash));
+	 if(!next) exit(1);
          next->next = NULL;
          next->id = dbt->db[i].id;
          cur->next = next;
@@ -91,7 +94,8 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    if(count<k){
       similar_ids = realloc(similar_ids, sizeof(int)*count);
    } 
-
+   free(next);
+   for (int p=0; p<SIZE; p++) free(hashtable[p]);
    return similar_ids;
 }
 
