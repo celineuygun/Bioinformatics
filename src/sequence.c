@@ -82,7 +82,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    }
 
    for(j = 0; j<SIZE; j++){
-      for(Hash* curr = hashtable[k]; curr != NULL; curr = curr->next){
+      for(Hash* curr = hashtable[j]; curr != NULL; curr = curr->next){
          similar_ids[count] = curr->id;
          count++;
       }
