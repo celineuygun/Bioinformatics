@@ -29,15 +29,16 @@ int main(int argc, char* argv[]){
 
     printf("Okunacak dosyanin adresi: %s\n", data);
     Dtbase *dbt = read_person_file(data);
-    printf("Veri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
+    printf("\nVeri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
     
 
     
    while(1){ 
-    printf("Hosgeldiniz. Lutfen yapmak istediginiz islemi secin.\n");
-    printf(" 1:  DNA benzerligini bulmak. \n");
-    printf(" 2:  Ayni gene sahip kisileri bulmak.\n");
-    printf(" 3:  Cikis\n");
+    printf("\n\nHosgeldiniz. Lutfen yapmak istediginiz islemi secin.\n");
+    printf(" 1:  Listeyi bastirmak\n");
+    printf(" 2:  DNA benzerligini bulmak. \n");
+    printf(" 3:  Ayni gene sahip kisileri bulmak.\n");
+    printf(" 4:  Cikis\n");
       scanf("%d",&respond);
 
 
@@ -45,6 +46,10 @@ int main(int argc, char* argv[]){
   switch (respond)
 {
     case 1:
+      print_database(dbt);
+    break;
+
+    case 2:
 printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz\n");
    scanf("%s", dna_seq);
        printf("En cok benzer kac tane veri istiyorsunuz?\n");
@@ -57,7 +62,7 @@ printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz\n");
             }
 	 break;
 
-   case 2:
+   case 3:
 printf("Geni bulmak icin bir gen dizisini giriniz: ");
        scanf("%s", gen_seq);
         int length=strlen(gen_seq);
@@ -76,7 +81,7 @@ printf("Geni bulmak icin bir gen dizisini giriniz: ");
                  }
                 break;
 
-   case 3:
+   case 4:
   printf("Gule Gule..\n");
   exit(0);
 
@@ -86,6 +91,7 @@ printf("Geni bulmak icin bir gen dizisini giriniz: ");
 }
 return 0;
 }
+
 
 
 /*int main(int argc,char* argv[]){
