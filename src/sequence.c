@@ -53,8 +53,9 @@ int find_distance(char* seq1,char* seq2){
  */
 int* find_similar_first(char* seq1, Dtbase* dbt,int k){
   int* similar_ids = calloc(k, sizeof(int));
-   //int min, index = 0;
-/*
+  /*
+   int min, index = 0;
+
    for(int j = 0; j < k; j++){
       min = find_distance(seq1,dbt->db[j].sequence);
       for(int i = j+1; i < dbt->size; ++i){
@@ -71,19 +72,25 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
       similar_ids[j] = dbt->db[index].id;
    }
    */
+   
    int j, count = 0;
-   Hash* hashtable[SIZE];
+   Hash* hashtable = calloc(SIZE, sizeof(Hash));
+   for (int p=0; p<SIZE; p++) hashtable[p].id = -1;
+
    for(int i = 0; i<dbt->size; i++){
       int hashIndex = find_distance(seq1,dbt->db[i].sequence);
-      Hash* cur = hashtable[hashIndex];
-      while(cur != NULL){
-         cur = cur->next;
+      Hash* cur = &hashtable[i];
+      if(hashtable[i].id == -1){
+         while(cur->next != NULL) cur = cur->next;
       }
-      cur->id = dbt->db->id;
+      Hash* next = calloc(1, sizeof(Hash));
+      next->id = dbt->db[i].id;
+      cur->next = next;
+      cur = cur->next;
    }
 
    for(j = 0; j<SIZE; j++){
-      for(Hash* curr = hashtable[j]; curr != NULL; curr = curr->next){
+      for(Hash* curr = &hashtable[j]; curr != NULL; curr = curr->next){
          similar_ids[count] = curr->id;
          count++;
       }
@@ -93,6 +100,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    if(count<k){
       similar_ids = realloc(similar_ids, sizeof(int)*count);
    } 
+
    return similar_ids;
 }
 
