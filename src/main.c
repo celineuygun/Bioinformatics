@@ -43,7 +43,7 @@ int main(int argc,char* argv[]){
         int length=strlen(gen_seq);
     // // bu gen dizisine sahip bireyleri arayip, idlerini geri dondurun.
      ids = realloc(ids, sizeof(int) * 100);
-         ids = find_gene_persons(gen_seq,length , *dbt);
+         ids = find_gene_persons(gen_seq, length, *dbt);
     printf("If you want to see the ID list of people who have same gene, please press 1.Else, press 0.\n");
         scanf("%d",&x);
              if(x==1){
