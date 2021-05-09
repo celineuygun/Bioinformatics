@@ -168,6 +168,6 @@ int *find_gene_persons(char* seq,int size,Dtbase dbt){
                    }
                 }
            }
-    //printf("Number of total people who have the same gene sequence: %d\n",count);
+    printf("Number of total people who have the same gene sequence: %d\n",count);
     return ids;
 }

@@ -5,6 +5,7 @@
 #include "database.h"
 
 int main(int argc,char* argv[]){
+    int i=0,x=0;
     char *data = malloc(sizeof(char) * 100);
     char *filename = malloc(sizeof(char) * 50);  
     if(!data || !filename) exit(1);
@@ -24,7 +25,7 @@ int main(int argc,char* argv[]){
     printf("Veri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
     
     char dna_seq[SIZE], gen_seq[SIZE/5];
-    int k; 
+   int k; 
     printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz\n");
     scanf("%s", dna_seq);
     printf("En cok benzer kac tane veri istiyorsunuz?\n");
@@ -37,11 +38,23 @@ int main(int argc,char* argv[]){
     }
 	
     // TODO: Kullanicidan bir gen dizisi isteyin.
-    // printf("Geni bulmak icin bir gen dizisini giriniz: ");
-    // scanf("%s", gen_seq);
+     printf("Geni bulmak icin bir gen dizisini giriniz: ");
+        scanf("%s", gen_seq);
+        int length=strlen(gen_seq);
     // // bu gen dizisine sahip bireyleri arayip, idlerini geri dondurun.
-    // ids = realloc(ids, sizeof(int) * 100);
-    // ids = find_gene_persons(gen_seq, dbt->size, *dbt);
-    // printf("Bulunan birey sayisi %lu\n", sizeof(ids)); 
+     ids = realloc(ids, sizeof(int) * 100);
+         ids = find_gene_persons(gen_seq,length , *dbt);
+    printf("If you want to see the ID list of people who have same gene, please press 1.Else, press 0.\n");
+        scanf("%d",&x);
+             if(x==1){
+                     while(1){
+                            if(ids[i]==ids[i+1])
+                              break;
+
+                     printf("ID[ %d ] : %d \n",i+1,ids[i]);
+                     i++;
+                           }
+                 }
+
 	return 0;
 }
