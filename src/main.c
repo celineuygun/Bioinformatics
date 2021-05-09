@@ -48,9 +48,17 @@ int main(int argc, char* argv[]){
       ids = realloc(ids, sizeof(int) * k);
       ids = find_similar_first(dna_seq, dbt, k);
       printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
-      for(int i = 0, j; i < k; ++i){
-        find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq);
+      while(1){
+       if(ids[k]==ids[k+1]){
+       k--;
       }
+       if(k<0) break;
+       find_binary(dbt,0,dbt->size-1,ids[k],dna_seq);
+       k--; 
+      }
+      /*for(int i = 0, j; i < k; ++i){
+        find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq);
+      }*/
 	    break;
 
       case 3:
