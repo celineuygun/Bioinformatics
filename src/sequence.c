@@ -53,26 +53,6 @@ int find_distance(char* seq1,char* seq2){
  */
 int* find_similar_first(char* seq1, Dtbase* dbt,int k){
   int* similar_ids = calloc(k, sizeof(int));
-  /*
-   int min, index = 0;
-
-   for(int j = 0; j < k; j++){
-      min = find_distance(seq1,dbt->db[j].sequence);
-      for(int i = j+1; i < dbt->size; ++i){
-         if(min >= find_distance(seq1, dbt->db[i].sequence)){
-            int flag = 0;
-            for(int p = 0; p < j; ++p){
-               if(dbt->db[i].id == similar_ids[p]){flag = 1; break;}
-            }
-            if(flag == 1) continue;
-            min = find_distance(seq1, dbt->db[i].sequence);
-            index = i;
-         } 
-      }
-      similar_ids[j] = dbt->db[index].id;
-   }
-   */
-   
    int count = 0;
    Hash* hashtable[SIZE];
    for (int p=0; p<SIZE; p++){
