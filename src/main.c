@@ -37,9 +37,11 @@ int main(int argc, char* argv[]){
     printf(" 4:  Cikis\n>> ");
     scanf("%d",&respond);
     switch (respond){
+      
       case 1:
         print_database(dbt);
         break;
+
       case 2:
         printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz.\n>> ");
         scanf("%s", dna_seq);
@@ -49,10 +51,7 @@ int main(int argc, char* argv[]){
         ids = find_similar_first(dna_seq, dbt, k);
         printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
         i=0;
-        while(1){
-        if(ids[i]==ids[i+1])
-        i++;
-        if(k<i+1) break;
+        while(i!=k){
         find_binary(dbt,0,dbt->size-1,ids[i],dna_seq);
         i++;
         }

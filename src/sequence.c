@@ -173,7 +173,7 @@ int find_gene_rabinkarp(char* seq,int size, char dnasequence[SIZE],int prime){
        found=1;
       }
    }
-    return found;
+return found;
 }
 
 /*
@@ -185,15 +185,15 @@ int *find_gene_persons(char* seq,int size,Dtbase dbt){
    int i=0,say=0,find=0,count=0,j=0;
    for(i=0;i<dbt.size;i++){
     find=find_gene_rabinkarp(seq,size,dbt.db[i].sequence,101);
-    if(find==1){
-    say=i;
-    count++;
-    while(j<count){
-    ids[j]=dbt.db[say].id;
-    j++;
-    }
-    }
-    }
-    printf("Toplamda bulunan birey sayisi: %d\n",count);
-    return ids;
+      if(find==1){
+        say=i;
+        count++;
+         while(j<count){
+          ids[j]=dbt.db[say].id;
+          j++;
+         }
+      }
+   }
+printf("Toplamda bulunan birey sayisi: %d\n",count);
+return ids;
 }
