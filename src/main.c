@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[]){
    char dna_seq[SIZE], gen_seq[SIZE/5];
-   int i=0,x=0;
+   int i=0;
    int k=0,respond=0;
    int *ids = malloc(sizeof(int));  
   
@@ -35,10 +35,10 @@ int main(int argc, char* argv[]){
     
    while(1){ 
     printf("\n\nHosgeldiniz. Lutfen yapmak istediginiz islemi secin.\n");
-    printf(" 1:  Listeyi bastirmak\n");
+    printf(" 1:  Listeyi bastirmak.\n");
     printf(" 2:  DNA benzerligini bulmak. \n");
     printf(" 3:  Ayni gene sahip kisileri bulmak.\n");
-    printf(" 4:  Cikis\n");
+    printf(" 4:  Cikis.\n");
       scanf("%d",&respond);
 
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
     break;
 
     case 2:
-printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz\n");
+printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz: \n");
    scanf("%s", dna_seq);
        printf("En cok benzer kac tane veri istiyorsunuz?\n");
   scanf("%d", &k);
@@ -63,23 +63,35 @@ printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz\n");
 	 break;
 
    case 3:
-printf("Geni bulmak icin bir gen dizisini giriniz: ");
+printf("\n Gene sahip olan insalari bulmak icin bir gen dizisi giriniz: \n");
        scanf("%s", gen_seq);
         int length=strlen(gen_seq);
     ids = realloc(ids, sizeof(int) * 100);
          ids = find_gene_persons(gen_seq,length , *dbt);
-    printf("Ayni gene sahip insanların ID listesini gormek istiyorsanız,  1'e, istemiyorsaniz 0'a basiniz.\n");
+    printf("\nAyni gene sahip insanlarin ID listesini gormek istiyorsaniz,  1'e, istemiyorsaniz 0'a basiniz.\n");
+    int x=0;
        scanf("%d",&x);
              if(x==1){
+               i=0;
                      while(1){
                             if(ids[i]==ids[i+1])
                               break;
-
-                     printf("ID[ %d ] : %d \n",i+1,ids[i]);
+                     printf("ID[%5d  ]: %5d \n",i+1,ids[i]);
                      i++;
                            }
-                 }
+                     while(1){
+              int y=0;
+           printf("\nAyrintili DNA bilgisini gormek istediginiz birey varsa lutfen ID listesindeki sira numarasini giriniz. Yoksa 0'a basarak cikis yapabilirsiniz. \n");
+                scanf("%d",&y);
+                if(y==0){
+                  break;
+                }
+                else
+                  find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq);
+                         }
+               }
                 break;
+
 
    case 4:
   printf("Gule Gule..\n");
