@@ -75,10 +75,11 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    Hash* hashtable[SIZE];
    for(int i = 0; i<dbt->size; i++){
       int hashIndex = find_distance(seq1,dbt->db[i].sequence);
-      while(hashtable[hashIndex] != NULL){
-         hashtable[hashIndex] = hashtable[hashIndex]->next;
+      Hash* cur = hashtable[hashIndex];
+      while(cur != NULL){
+         cur = cur->next;
       }
-      hashtable[hashIndex]->id = dbt->db->id;
+      cur->id = dbt->db->id;
    }
 
    for(j = 0; j<SIZE; j++){
@@ -88,7 +89,6 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
       }
       if(count == k) break;
    }
-   
    
    return similar_ids;
 }
