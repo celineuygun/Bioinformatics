@@ -73,7 +73,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    }
    */
    
-   int j, count = 0;
+   int count = 0;
    Hash* hashtable[SIZE];
    for (int p=0; p<SIZE; p++){
       hashtable[p] = calloc(1, sizeof(Hash));
@@ -96,10 +96,14 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
       } 
    }
 
-   for(j = 0; j<SIZE; j++){
-      for(Hash* curr = hashtable[j]; curr != NULL; curr = curr->next){
+   Hash* curr;
+   for(int j = 0; j<SIZE; j++){
+      Hash* hash_node_two = hashtable[j];
+      for(curr = hash_node_two; curr != NULL; curr = curr->next){
+         if(curr->id == -1) continue;
          similar_ids[count] = curr->id;
          count++;
+         if(count == k) break;
       }
       if(count == k) break;
    }
