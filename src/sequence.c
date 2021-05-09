@@ -74,23 +74,30 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
    */
    
    int j, count = 0;
-   Hash* hashtable = calloc(SIZE, sizeof(Hash));
-   for (int p=0; p<SIZE; p++) hashtable[p].id = -1;
+   Hash* hashtable[SIZE];
+   for (int p=0; p<SIZE; p++){
+      hashtable[p] = calloc(1, sizeof(Hash));
+      hashtable[p]->id = -1;
+      hashtable[p]->next = NULL;
+   } 
 
    for(int i = 0; i<dbt->size; i++){
       int hashIndex = find_distance(seq1,dbt->db[i].sequence);
-      Hash* cur = &hashtable[i];
-      if(hashtable[i].id == -1){
-         while(cur->next != NULL) cur = cur->next;
-      }
-      Hash* next = calloc(1, sizeof(Hash));
-      next->id = dbt->db[i].id;
-      cur->next = next;
-      cur = cur->next;
+      Hash* hash_node = hashtable[hashIndex];
+      Hash* cur;
+      
+      if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
+      else{
+         for(cur = hash_node; cur->next != NULL; cur = cur->next);
+         Hash* next = calloc(1, sizeof(Hash));
+         next->next = NULL;
+         next->id = dbt->db[i].id;
+         cur->next = next;
+      } 
    }
 
    for(j = 0; j<SIZE; j++){
-      for(Hash* curr = &hashtable[j]; curr != NULL; curr = curr->next){
+      for(Hash* curr = hashtable[j]; curr != NULL; curr = curr->next){
          similar_ids[count] = curr->id;
          count++;
       }
