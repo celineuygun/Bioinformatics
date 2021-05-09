@@ -10,7 +10,7 @@
  * ve icindeki verileri bir veri yapisinda saklar.
  */
 Dtbase* read_person_file(char* filename){
-   Dtbase* dbt = malloc(sizeof(Dtbase));
+  Dtbase* dbt = calloc(1, sizeof(Dtbase));
    if(!dbt) exit(1);
    char buffer[BUFFER_SIZE];
    int lenBuf = 0, idNo, j=0;

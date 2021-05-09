@@ -6,14 +6,15 @@
 
 
 int main(int argc, char* argv[]){
-  if(argc != 2){
+  /*if(argc != 2){
     printf("Programi kullanmak icin dosya ismi ile calistirin.\n");
     exit(1);
-  }
+    }
   while(!strstr(argv[1], ".txt")){
     printf("Dosya ismi .txt uzantili girilmelidir: ");
     exit(1);
-  }
+    }*/
+  argv[1] = "database.txt";
   char dna_seq[SIZE], gen_seq[SIZE];
   int i=0, k=0,respond=0;
   int *ids = malloc(sizeof(int)*100);  
@@ -26,7 +27,7 @@ int main(int argc, char* argv[]){
   strcat(data, argv[1]);
   printf("Okunacak dosyanin adresi: %s\n", data);
   Dtbase *dbt = read_person_file(data);
-  printf("\nVeri tabani okundu, hatali veri sayisi: %d\n",dbt->corrupted);
+  printf("\nVeri tabani okundu:\nHatasiz veri sayisi: %d\nHatali veri sayisi: %d\n", dbt->size, dbt->corrupted);
   
   while(1){ 
     printf("\n\nHosgeldiniz. Lutfen yapmak istediginiz islemi secin:\n");

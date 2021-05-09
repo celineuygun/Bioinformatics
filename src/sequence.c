@@ -52,7 +52,7 @@ int find_distance(char* seq1,char* seq2){
  * En benzer idler, uzakligi en dusuk olanlardir.
  */
 int* find_similar_first(char* seq1, Dtbase* dbt,int k){
-	int* similar_ids = malloc(sizeof(int)*k);
+  int* similar_ids = calloc(k, sizeof(int));
    //int min, index = 0;
 /*
    for(int j = 0; j < k; j++){
