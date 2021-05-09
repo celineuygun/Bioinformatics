@@ -6,10 +6,10 @@
 
 
 int main(int argc, char* argv[]){
-   char dna_seq[SIZE], gen_seq[SIZE/5];
+   char dna_seq[SIZE], gen_seq[SIZE];
    int i=0;
    int k=0,respond=0;
-   int *ids = malloc(sizeof(int));  
+   int *ids = malloc(sizeof(int)*100);  
   
    char *data = malloc(sizeof(char) * 100);
    char *filename = malloc(sizeof(char) * 50);  
@@ -66,7 +66,7 @@ printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz: \n");
 printf("\n Ayni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz: \n");
        scanf("%s", gen_seq);
         int length=strlen(gen_seq);
-    ids = realloc(ids, sizeof(int) * 100);
+    ids = realloc(ids, sizeof(int) * 1000);
          ids = find_gene_persons(gen_seq,length , *dbt);
     printf("\nAyni gene sahip insanlarin ID listesini gormek istiyorsaniz 1'e, istemiyorsaniz 0'a basiniz.\n");
     int x=0;
