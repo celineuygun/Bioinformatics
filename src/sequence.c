@@ -89,6 +89,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt,int k){
       }
       if(count == k) break;
    }
+
    if(count<k){
       similar_ids = realloc(similar_ids, sizeof(int)*count);
    } 
