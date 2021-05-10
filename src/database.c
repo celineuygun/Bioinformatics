@@ -87,15 +87,15 @@ Dtbase* read_person_file(char* filename, Dtbasecor* corr){
       ++j;
    }
    fclose(fp);
+   free(cor_ind);
    return dbt;
 }
 
 /*
- * Parametre olarak verilen veri yapisini
- * ekrana basar.
+ * Parametre olarak verilen veri yapisinda
+ * bulunan hatasiz verileri ekrana basar.
  */
 void print_database(Dtbase* dbt){
-   printf("\n====== VERITABANI BILGISI\nBOYUT: %24d\nHATALI DNA: %20d\n", dbt->size, dbt->corrupted);
    for(int i = 0; i < dbt->size; ++i){
       printf("\n============ KISI BILGISI\nID: %27d\nISIM: %25s\nSEQUENCE:  %20s\nPAIR:      %20s\n", 
                                                             dbt->db[i].id, dbt->db[i].name, dbt->db[i].sequence, dbt->db[i].pair);

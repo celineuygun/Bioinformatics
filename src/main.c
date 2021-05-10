@@ -20,17 +20,24 @@ int main(int argc, char* argv[]){
   char fileloc[] = "../data/";
 
   char *data = calloc(strlen(fileloc) + strlen(argv[1]) + 1, sizeof(char));
-  char *tmp = data;
   if(!data) exit(1);
 
   Dtbasecor *corr = calloc(1, sizeof(Dtbasecor));
   if(!corr) exit(1);
   corr->db = calloc(DBSIZE, sizeof(cPerson));
+  if(!corr->db) exit(1);
   corr->size = 0;
   
   strcpy(data, fileloc);
   strcat(data, argv[1]);
   Dtbase *dbt = read_person_file(data, corr);
+
+  printf("\n========= PROJE BILGILERI\n");
+  printf("Konu: Bioinformatics\n");
+  printf("Hazirlayanlar:\n");
+  printf("Dilara Elif Narin\n");
+  printf("Zeynep Selin Uygun\n");
+  printf("Ece Yücer");
   
   while(1){ 
     printf("\n\nYapmak istediginiz islemi seciniz.\n");
@@ -54,7 +61,7 @@ int main(int argc, char* argv[]){
 
       case 3:
         printf("\n========== HATALI VERILER\n");
-        for(int i = 0; i < corr->size; ++i) printf("%3d) ID: %5d ISIM: %s\n", i+1, corr->db[i].id, corr->db[i].name);
+        for(int i = 0; i < corr->size; ++i) printf("%3d) ID: %-5d ISIM: %s\n", i+1, corr->db[i].id, corr->db[i].name);
         printf("\nAyrintili DNA bilgisini gormek istediginiz kisinin sira numarasini giriniz.\n>> ");
         scanf("%d", &i);
         while(i < 1 || i > corr->size){
@@ -70,11 +77,7 @@ int main(int argc, char* argv[]){
         printf("\nEn cok benzer kac tane veri istiyorsunuz?\n>> ");
         scanf("%d", &k);
         ids = find_similar_first(dna_seq, dbt, k);
-        i = 0;
-        while(i != k){
-          find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq, 1);
-          i++;
-        }
+        for(int i = 0; i != k; ++i) find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq, 1);
         free(ids);
         break;
 
@@ -100,8 +103,7 @@ int main(int argc, char* argv[]){
             }
             find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq, 0);
           }
-        }
-	      free(ids);
+        }free(ids);
         break;
 
       case 0:
@@ -112,8 +114,9 @@ int main(int argc, char* argv[]){
         break;
     }
   }
-
-  free(tmp);
+  free(corr->db);
+  free(corr);
   free(dbt);
+  free(data);
   return 0;
 }

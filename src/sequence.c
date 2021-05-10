@@ -71,7 +71,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
       else{
          for(curr = hash_node; curr->next != NULL; curr = curr->next);
          next = calloc(1, sizeof(Hash));
-	      if(!next) exit(1);
+	 if(!next) exit(1);
          next->next = NULL;
          next->id = dbt->db[i].id;
          curr->next = next;
@@ -87,8 +87,16 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    }
    if(count < k) similar_ids = realloc(similar_ids, sizeof(int) * count);
    if(!similar_ids) exit(1);
-   free(next);
-   for (int p = 0; p < SIZE; p++) free(hashtable[p]);
+   for (int p = 0; p < SIZE; p++){
+     curr = hashtable[p];
+     if(curr){
+       while(curr->next != NULL){
+	 hash_node = curr;
+	 curr = curr->next;
+	 free(hash_node);
+       }free(curr);
+     }
+   }
    free(hashtable);
    return similar_ids;
 }
