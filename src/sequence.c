@@ -135,7 +135,6 @@ int find_gene_classic(char* seq, int size, char dnasequence[SIZE]){
          if(found == 1) break;
       }
    }
-	// varsa found=1 olarak dondur.
 	return found;
 }
 
@@ -187,6 +186,6 @@ int *find_gene_persons(char* seq, int size, Dtbase dbt){
          }
       }
    }
-   printf("Toplamda bulunan birey sayisi: %d\n",count);
+   printf("\nTOPLAMDA BULUNAN KISI SAYISI: %d\n",count);
    return ids;
 }

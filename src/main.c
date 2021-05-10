@@ -87,6 +87,7 @@ int main(int argc, char* argv[]){
         int x = 0;
         scanf("%d", &x);
         if(x == 1){
+          printf("\n");
           for(i = 0; ids[i] != ids[i+1]; ++i) printf("ID[%5d  ]: %5d \n", i+1, ids[i]);
           while(1){
             int y = 0;
@@ -94,7 +95,7 @@ int main(int argc, char* argv[]){
             scanf("%d", &y);
             if(y == 0) break;
             if(y > i){
-              printf("Liste boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor\n");
+              printf("\nListe boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor\n");
               break;
             }
             find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq, 0);
