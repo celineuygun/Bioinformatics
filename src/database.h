@@ -25,9 +25,24 @@ typedef struct DB{
     int size;
 } Dtbase;
 
-Dtbase* read_person_file(char* filename);
+
+typedef struct PRSC{
+    char sequence[SIZE];
+    char pair[SIZE];
+    int id;
+    char name[NSIZE];
+    int cor_ind[SIZE];
+} cPerson;
+
+typedef struct DBC{
+    cPerson *db;
+    int size;
+} Dtbasecor;
+
+Dtbase* read_person_file(char* filename, Dtbasecor* corr);
 void print_database(Dtbase* db);
 void print_double_helix(Person db);
+void print_double_helix_corr(cPerson db);
 void find_binary(Dtbase* dbt, int l, int r, int id, char* dna_seq, int dist);
 
 #endif /* SRC_DATABASE_H_ */

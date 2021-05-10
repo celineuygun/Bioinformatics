@@ -154,7 +154,7 @@ int find_gene_rabinkarp(char* seq, int size, char dnasequence[SIZE], int prime){
    double hashseq = 0.0;
    double hashdna = 0.0;
    int i = 0, j = 0;
-   hashseq = finger_print(seq,prime,size);
+   hashseq = finger_print(seq, prime, size);
    for(i = 0; i < SIZE - size; i++){
      hashdna = finger_print(&dnasequence[i], prime, size);
       if(hashseq == hashdna){

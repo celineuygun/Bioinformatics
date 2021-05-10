@@ -23,28 +23,51 @@ int main(int argc, char* argv[]){
   char *tmp = data;
   if(!data) exit(1);
 
+  Dtbasecor *corr = calloc(1, sizeof(Dtbasecor));
+  if(!corr) exit(1);
+  corr->db = calloc(DBSIZE, sizeof(cPerson));
+  corr->size = 0;
+  
   strcpy(data, fileloc);
   strcat(data, argv[1]);
-  printf("Okunacak dosyanin adresi: %s\n", data);
-  Dtbase *dbt = read_person_file(data);
-  printf("Veri tabani okundu.\nHatasiz veri sayisi: %d\nHatali veri sayisi: %d", dbt->size, dbt->corrupted);
+  Dtbase *dbt = read_person_file(data, corr);
   
   while(1){ 
-    printf("\n\nHosgeldiniz. Lutfen yapmak istediginiz islemi secin:\n");
-    printf(" 1:  Listeyi bastirmak\n");
-    printf(" 2:  DNA benzerligini bulmak\n");
-    printf(" 3:  Ayni gene sahip kisileri bulmak\n");
-    printf(" 4:  Cikis\n>> ");
+    printf("\n\nYapmak istediginiz islemi seciniz.\n");
+    printf(" 1:  Dosya bilgilerini gormek\n");
+    printf(" 2:  Hatasiz verileri bastirmak\n");
+    printf(" 3:  Hatali verileri bastirmak\n");
+    printf(" 4:  DNA benzerligini bulmak\n");
+    printf(" 5:  Ayni gene sahip kisileri bulmak\n");
+    printf(" 0:  Cikis\n>> ");
     scanf("%d", &respond);
     switch(respond){
       case 1:
-        print_database(dbt);
+        printf("\n========= DOSYA BILGILERI\n");
+        printf("Dosyanin adresi     : %s\n", data);
+        printf("Toplam veri sayisi  : %d\nHatasiz veri sayisi : %d\nHatali veri sayisi  : %d\n", dbt->size + corr->size, dbt->size, dbt->corrupted);
         break;
 
       case 2:
-        printf("DNA benzerligini bulmak icin bir DNA dizisi giriniz.\n>> ");
+        print_database(dbt);
+        break;
+
+      case 3:
+        printf("\n========== HATALI VERILER\n");
+        for(int i = 0; i < corr->size; ++i) printf("%3d) ID: %5d ISIM: %s\n", i+1, corr->db[i].id, corr->db[i].name);
+        printf("\nAyrintili DNA bilgisini gormek istediginiz kisinin sira numarasini giriniz.\n>> ");
+        scanf("%d", &i);
+        while(i < 1 || i > corr->size){
+          printf("Lutfen gecerli bir secim yapiniz.\n>> ");
+          scanf("%d", &i);
+        }
+        print_double_helix_corr(corr->db[i-1]);
+        break;
+
+      case 4:
+        printf("\nDNA benzerligini bulmak icin bir DNA dizisi giriniz.\n>> ");
         scanf("%s", dna_seq);
-        printf("En cok benzer kac tane veri istiyorsunuz?\n>> ");
+        printf("\nEn cok benzer kac tane veri istiyorsunuz?\n>> ");
         scanf("%d", &k);
         ids = find_similar_first(dna_seq, dbt, k);
         i = 0;
@@ -55,8 +78,8 @@ int main(int argc, char* argv[]){
         free(ids);
         break;
 
-      case 3:
-        printf("\n Ayni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz.\n>> ");
+      case 5:
+        printf("\nAyni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz.\n>> ");
         scanf("%s", gen_seq);
         int length = strlen(gen_seq);
         ids = find_gene_persons(gen_seq, length, *dbt);
@@ -71,7 +94,7 @@ int main(int argc, char* argv[]){
             scanf("%d", &y);
             if(y == 0) break;
             if(y > i){
-              printf("Liste boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor \n");
+              printf("Liste boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor\n");
               break;
             }
             find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq, 0);
@@ -80,7 +103,7 @@ int main(int argc, char* argv[]){
 	      free(ids);
         break;
 
-      case 4:
+      case 0:
         printf("\nGule Gule..\n");
         exit(0);
 
