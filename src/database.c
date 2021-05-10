@@ -9,40 +9,6 @@
  * Parametre olarak verilen dosyayi acar
  * ve icindeki verileri bir veri yapisinda saklar.
  */
-// Dtbase* read_person_file(char* filename){
-//   Dtbase* dbt = calloc(1, sizeof(Dtbase));
-//    if(!dbt) exit(1);
-//    char buffer[BUFFER_SIZE];
-//    int lenBuf = 0, idNo, j = 0;
-//    char name[NSIZE], first[SIZE], second[SIZE];
-//    FILE *fp = fopen(filename, "r");
-//    if(!fp){printf("Dosya acilamadi. Dogru dosya ismini girdiginizden emin olun.\n"); exit(1);}
-//    while(fgets(buffer, BUFFER_SIZE, fp) != NULL){
-//       lenBuf = strlen(buffer);
-//       buffer[lenBuf - 1] = (buffer[lenBuf - 1] == '\n') ? '\0' : buffer[lenBuf - 1];                       
-//       sscanf(buffer, "%d %s %s %s", &idNo, name, first, second);
-//       for(int i = 0; first[i] != '\0' || second[i] != '\0'; ++i){
-//          if((first[i] == 'A' && second[i] == 'T') || (first[i] == 'T' && second[i] == 'A'));
-//          else if((first[i] == 'G' && second[i] == 'C') || (first[i] == 'C' && second[i] == 'G'));
-//          else{
-//             dbt->corrupted++;
-//             j--;
-//             break;
-//          }
-//          if(first[i+1] == '\0'|| second[i+1] == '\0'){
-//             dbt->db[j].id = idNo;
-//             strcpy(dbt->db[j].name, name);
-//             strcpy(dbt->db[j].sequence, first);
-//             strcpy(dbt->db[j].pair, second);
-//             dbt->size++;
-//          }
-//       }
-//       ++j;
-//    }
-//    fclose(fp);
-//    return dbt;
-// }
-
 Dtbase* read_person_file(char* filename, Dtbasecor* corr){
    int *cor_ind = calloc(SIZE, sizeof(int));
    Dtbase* dbt = calloc(1, sizeof(Dtbase));

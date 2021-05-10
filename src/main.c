@@ -6,15 +6,14 @@
 
 
 int main(int argc, char* argv[]){
-  /*if(argc != 2){
+  if(argc != 2){
     printf("Programi kullanmak icin dosya ismi ile calistirin.\n");
     exit(1);
-    }
+  }
   while(!strstr(argv[1], ".txt")){
-    printf("Dosya ismi .txt uzantili girilmelidir: ");
+    printf("Dosya ismi .txt uzantili girilmelidir.\n");
     exit(1);
-    }*/
-  argv[1] = "database.txt";
+  }
   char dna_seq[SIZE], gen_seq[SIZE];
   int i = 0, k = 0, response = 0, *ids; 
   char fileloc[] = "../data/";

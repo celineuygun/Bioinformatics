@@ -39,7 +39,7 @@ int find_distance(char* seq1, char* seq2){
       }
    }
    distance = matrix[lenSeq1][lenSeq2];
-   for(int i = 0; i <= lenSeq1; ++i)free(matrix[i]);
+   for(int i = 0; i <= lenSeq1; ++i) free(matrix[i]);
    free(matrix);
    return distance;
 }
@@ -88,13 +88,13 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    if(count < k) similar_ids = realloc(similar_ids, sizeof(int) * count);
    if(!similar_ids) exit(1);
    for (int p = 0; p < SIZE; p++){
-     curr = hashtable[p];
-     if(curr){
-       while(curr->next != NULL){
-	 hash_node = curr;
-	 curr = curr->next;
-	 free(hash_node);
-       }free(curr);
+      curr = hashtable[p];
+      if(curr){
+        while(curr->next != NULL){
+           hash_node = curr;
+           curr = curr->next;
+           free(hash_node);
+      }free(curr);
      }
    }
    free(hashtable);
@@ -112,12 +112,12 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
  *
  */
 double finger_print(char* seq, int prime, int size){
-    double sum = 0;
-    for(int i = 0; i < size; i++){
-       sum += seq[i] * pow(prime, size - i - 1);
-    }
-    return sum;
-  }
+   double sum = 0;
+   for(int i = 0; i < size; i++){
+      sum += seq[i] * pow(prime, size - i - 1);
+   }
+   return sum;
+}
 
 /*
  * Verilen bir gen dizisini DNA dizisi içerisinde arar.
