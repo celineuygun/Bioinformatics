@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
     }*/
   argv[1] = "database.txt";
   char dna_seq[SIZE], gen_seq[SIZE];
-  int i = 0, k = 0, respond = 0, *ids; 
+  int i = 0, k = 0, response = 0, *ids; 
   char fileloc[] = "../data/";
 
   char *data = calloc(strlen(fileloc) + strlen(argv[1]) + 1, sizeof(char));
@@ -40,8 +40,8 @@ int main(int argc, char* argv[]){
     printf(" 4:  DNA benzerligini bulmak\n");
     printf(" 5:  Ayni gene sahip kisileri bulmak\n");
     printf(" 0:  Cikis\n>> ");
-    scanf("%d", &respond);
-    switch(respond){
+    scanf("%d", &response);
+    switch(response){
       case 1:
         printf("\n========= DOSYA BILGILERI\n");
         printf("Dosyanin adresi     : %s\n", data);
