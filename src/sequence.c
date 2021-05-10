@@ -53,49 +53,43 @@ int find_distance(char* seq1, char* seq2){
  */
 int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    int* similar_ids = calloc(k, sizeof(int));
-   if(!similar_ids) exit(1);
+   Hash **hashtable = calloc(SIZE, sizeof(Hash*));
+   if(!similar_ids || !hashtable) exit(1);
+   Hash *next, *curr, *hash_node;
    int count = 0;
-   Hash *hashtable[SIZE], *next;
-   for (int p = 0; p < SIZE; p++){
+
+   for(int p = 0; p < SIZE; p++){
       hashtable[p] = calloc(1, sizeof(Hash));
       if(!hashtable[p]) exit(1);
       hashtable[p]->id = -1;
       hashtable[p]->next = NULL;
    } 
-
-   for(int i = 0; i<dbt->size; i++){
+   for(int i = 0; i < dbt->size; i++){
       int hashIndex = find_distance(seq1, dbt->db[i].sequence);
-      Hash* hash_node = hashtable[hashIndex];
-      Hash* cur;
-      
+      hash_node = hashtable[hashIndex];
       if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
       else{
-         for(cur = hash_node; cur->next != NULL; cur = cur->next);
+         for(curr = hash_node; curr->next != NULL; curr = curr->next);
          next = calloc(1, sizeof(Hash));
-	 if(!next) exit(1);
+	      if(!next) exit(1);
          next->next = NULL;
          next->id = dbt->db[i].id;
-         cur->next = next;
+         curr->next = next;
       } 
    }
-
-   Hash* curr;
-   for(int j = 0; j < SIZE; j++){
-      Hash* hash_node_two = hashtable[j];
-      for(curr = hash_node_two; curr != NULL; curr = curr->next){
-         if(curr->id == -1) continue;
+   for(int j = 0; j < SIZE && count != k; j++){
+      hash_node = hashtable[j];
+      if(hash_node->id == -1) continue;
+      for(curr = hash_node; curr != NULL && count != k; curr = curr->next){
          similar_ids[count] = curr->id;
          count++;
-         if(count == k) break;
       }
-      if(count == k) break;
    }
-
-   if(count < k){
-      similar_ids = realloc(similar_ids, sizeof(int) * count);
-   } 
+   if(count < k) similar_ids = realloc(similar_ids, sizeof(int) * count);
+   if(!similar_ids) exit(1);
    free(next);
    for (int p = 0; p < SIZE; p++) free(hashtable[p]);
+   free(hashtable);
    return similar_ids;
 }
 

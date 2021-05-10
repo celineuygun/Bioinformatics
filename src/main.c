@@ -16,12 +16,12 @@ int main(int argc, char* argv[]){
     }*/
   argv[1] = "database.txt";
   char dna_seq[SIZE], gen_seq[SIZE];
-  int i = 0, k = 0, respond = 0;
-  int *ids = calloc(10, sizeof(int));  
-  char *data = calloc(100, sizeof(char)); 
-  if(!data || !ids) exit(1);
+  int i = 0, k = 0, respond = 0, *ids; 
+  char fileloc[] = "../data/";
 
-  char fileloc[] = "../data/"; 
+  char *data = calloc(strlen(fileloc) + strlen(argv[1]) + 1, sizeof(char));
+  char *tmp = data;
+  if(!data) exit(1);
 
   strcpy(data, fileloc);
   strcat(data, argv[1]);
@@ -46,44 +46,38 @@ int main(int argc, char* argv[]){
         scanf("%s", dna_seq);
         printf("En cok benzer kac tane veri istiyorsunuz?\n>> ");
         scanf("%d", &k);
-        ids = realloc(ids, sizeof(int) * k);
         ids = find_similar_first(dna_seq, dbt, k);
-        printf("Toplamda bulunan benzer birey sayisi: %d\n", k);
         i = 0;
         while(i != k){
-          find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq);
+          find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq, 1);
           i++;
         }
+        free(ids);
         break;
 
       case 3:
         printf("\n Ayni gene sahip olan insanlari bulmak icin bir gen dizisi giriniz.\n>> ");
         scanf("%s", gen_seq);
         int length = strlen(gen_seq);
-        ids = realloc(ids, sizeof(int) * 100);
         ids = find_gene_persons(gen_seq, length, *dbt);
         printf("\nAyni gene sahip insanlarin ID listesini gormek istiyorsaniz 1'e, istemiyorsaniz 0'a basiniz.\n>> ");
         int x = 0;
         scanf("%d", &x);
         if(x == 1){
-          i = 0;
+          for(i = 0; ids[i] != ids[i+1]; ++i) printf("ID[%5d  ]: %5d \n", i+1, ids[i]);
           while(1){
-            if(ids[i] == ids[i+1]) break;
-            printf("ID[%5d  ]: %5d \n", i+1, ids[i]);
-            i++;
-          }
-          while(1){
-            int y=0;
+            int y = 0;
             printf("\nAyrintili DNA bilgisini gormek istediginiz kisi varsa lutfen ID listesindeki sira numarasini giriniz. Yoksa 0'a basarak cikis yapabilirsiniz.\n>> ");
             scanf("%d", &y);
             if(y == 0) break;
             if(y > i){
-            printf("Liste boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor \n");
-            break;
+              printf("Liste boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor \n");
+              break;
             }
-            find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq);
+            find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq, 0);
           }
         }
+	      free(ids);
         break;
 
       case 4:
@@ -95,7 +89,7 @@ int main(int argc, char* argv[]){
     }
   }
 
-  free(ids);
-  free(data);
+  free(tmp);
+  free(dbt);
   return 0;
 }

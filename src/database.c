@@ -29,7 +29,7 @@ Dtbase* read_person_file(char* filename){
             j--;
             break;
          }
-         if(first[i+1]=='\0'|| second[i+1]=='\0'){
+         if(first[i+1] == '\0'|| second[i+1] == '\0'){
             dbt->db[j].id = idNo;
             strcpy(dbt->db[j].name, name);
             strcpy(dbt->db[j].sequence, first);
@@ -63,13 +63,13 @@ void print_double_helix(Person db){
    printf("\n============ KISI BILGISI\nID: %27d\nISIM: %25s\nDNA:\n\n", db.id, db.name);
    for(int j = 0; db.sequence[j] != '\0' || db.pair[j] != '\0'; ++j){
       if(j % 4 == 0){
-         if((j/4)%2==0)printf("  %c%c", db.sequence[j], db.pair[j]);
+         if((j/4)%2 == 0)printf("  %c%c", db.sequence[j], db.pair[j]);
          else printf("  %c%c", db.pair[j], db.sequence[j]);
       }else if(j % 4 == 1 || j % 4 == 3){
-         if((j/4)%2==0)printf(" %c--%c", db.sequence[j], db.pair[j]);
+         if((j/4)%2 == 0)printf(" %c--%c", db.sequence[j], db.pair[j]);
          else printf(" %c--%c", db.pair[j], db.sequence[j]);
       }else{
-         if((j/4)%2==0)printf("%c----%c", db.sequence[j], db.pair[j]);
+         if((j/4)%2 == 0)printf("%c----%c", db.sequence[j], db.pair[j]);
          else printf("%c----%c", db.pair[j], db.sequence[j]);
       }
       printf("\n");
@@ -77,15 +77,21 @@ void print_double_helix(Person db){
    printf("\n");
 }
 
-void find_binary(Dtbase* dbt, int l, int r, int n, char* dna_seq){
+/*
+ * Parametre olarak verilen veri yapisinda
+ * istenen id'ye sahip kisiyi binary search ile
+ * bulur ve bilgilerini eger dist == 1 ise
+ * dna_seq ile olan Levenshtein uzakligiyla yazdirir.
+ */
+void find_binary(Dtbase* dbt, int l, int r, int id, char* dna_seq, int dist){
    if(l <= r){
       int m = (l + r)/2;
-      if(dbt->db[m].id == n){
+      if(dbt->db[m].id == id){
          print_double_helix(dbt->db[m]); 
-         printf("UZAKLIK: %d\n", find_distance(dna_seq, dbt->db[m].sequence));
+         if(dist) printf("UZAKLIK: %d\n", find_distance(dna_seq, dbt->db[m].sequence));
          return;
       }
-      else if(dbt->db[m].id < n) find_binary(dbt, m + 1, r, n, dna_seq);
-      else find_binary(dbt, l, m - 1, n, dna_seq);
+      else if(dbt->db[m].id < id) find_binary(dbt, m + 1, r, id, dna_seq, dist);
+      else find_binary(dbt, l, m - 1, id, dna_seq, dist);
    }
 }
