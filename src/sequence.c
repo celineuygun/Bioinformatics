@@ -71,7 +71,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
       else{
          for(curr = hash_node; curr->next != NULL; curr = curr->next);
          next = calloc(1, sizeof(Hash));
-	 if(!next) exit(1);
+	      if(!next) exit(1);
          next->next = NULL;
          next->id = dbt->db[i].id;
          curr->next = next;
