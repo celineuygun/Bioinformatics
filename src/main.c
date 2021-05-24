@@ -36,7 +36,7 @@ int main(int argc, char* argv[]){
   printf("Hazirlayanlar:\n");
   printf("Dilara Elif Narin\n");
   printf("Zeynep Selin Uygun\n");
-  printf("Ece Yücer");
+  printf("Ece Yucer");
   
   while(1){ 
     printf("\n\nYapmak istediginiz islemi seciniz.\n");
