@@ -3,7 +3,7 @@
 #include <string.h>
 #include "sequence.h"
 #include "database.h"
-
+#include <time.h>
 
 int main(int argc, char* argv[]){
   if(argc != 2){

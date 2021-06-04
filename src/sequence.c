@@ -183,17 +183,16 @@ int find_gene_rabinkarp(char* seq, int size, char dnasequence[SIZE], int prime){
 int *find_gene_persons(char* seq, int size, Dtbase dbt){
    int *ids = calloc(dbt.size, sizeof(int));
    int i = 0, say = 0, find = 0, count = 0, j = 0;
-   for(i = 0; i < dbt.size; i++){
+   for(i = 0; i < dbt.size; i++){//veri tabaninin boyutu kadar arama yapar
     find = find_gene_rabinkarp(seq, size, dbt.db[i].sequence, 101);
       if(find == 1){
-         say = i;
-         count++;
-         while(j < count){
-            ids[j] = dbt.db[say].id;
-            j++;
-         }
+         say = i;//say degiskenine gen bulunan veriyi atiyoruz
+         ids[j]=dbt.db[say].id;//ve ids arrayi icerisine yaziyoruz.
+         j++;
+         count++;//toplamda bulunan birey sayisini tutmak icin.
       }
    }
    printf("\nTOPLAMDA BULUNAN KISI SAYISI: %d\n",count);
    return ids;
 }
+
