@@ -58,13 +58,13 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    Hash *next, *curr, *hash_node;
    int count = 0;
 
-   for(int p = 0; p < SIZE; p++){
+   for(int p = 0; p < SIZE; p++){//hash table olusturulur
       hashtable[p] = calloc(1, sizeof(Hash));
       if(!hashtable[p]) exit(1);
       hashtable[p]->id = -1;
       hashtable[p]->next = NULL;
    } 
-   for(int i = 0; i < dbt->size; i++){
+   for(int i = 0; i < dbt->size; i++){//dna sequence uzaklik degerlerine gore hash table icersine yerlestirilir
       int hashIndex = find_distance(seq1, dbt->db[i].sequence);
       hash_node = hashtable[hashIndex];
       if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
@@ -132,10 +132,10 @@ double finger_print(char* seq, int prime, int size){
 int find_gene_classic(char* seq, int size, char dnasequence[SIZE]){
 	int found = 0;
    for(int i = 0; i < SIZE; i++){
-      if(dnasequence[i] == seq[0]){
+      if(dnasequence[i] == seq[0]){//parametre olarak girilen gen dizsinin ilk harfi ile kiyaslama yapilir
          found = 1;
          for(int j = 1; j < size; j++){
-            if(dnasequence[i+j] != seq[j]){
+            if(dnasequence[i+j] != seq[j]){//eger ilk harfi ayni ise size kadar ilerler ve harf harf karsilastirir.
                found = 0;
                break;
             }
@@ -161,12 +161,13 @@ int find_gene_rabinkarp(char* seq, int size, char dnasequence[SIZE], int prime){
    double hashseq = 0.0;
    double hashdna = 0.0;
    int i = 0, j = 0;
-   hashseq = finger_print(seq, prime, size);
+   hashseq = finger_print(seq, prime, size);//parametre olarak girilen gen dizisinin hash degeri
    for(i = 0; i < SIZE - size; i++){
-     hashdna = finger_print(&dnasequence[i], prime, size);
+     hashdna = finger_print(&dnasequence[i], prime, size);//parametre olarak girilen size'a gore dna seq icinde 
+                                                          //olusturulan gen dizilerinin has degeri.
       if(hashseq == hashdna){
          for(j = 0; j < size; j++){
-            if(dnasequence[i+j] != seq[j]){
+            if(dnasequence[i+j] != seq[j]){//hash degerinin esit olmasi durumunda harf harf karsilastirir.
                break;
             }
          }
@@ -183,13 +184,13 @@ int find_gene_rabinkarp(char* seq, int size, char dnasequence[SIZE], int prime){
 int *find_gene_persons(char* seq, int size, Dtbase dbt){
    int *ids = calloc(dbt.size, sizeof(int));
    int i = 0, say = 0, find = 0, count = 0, j = 0;
-   for(i = 0; i < dbt.size; i++){//veri tabaninin boyutu kadar arama yapar
+   for(i = 0; i < dbt.size; i++){
     find = find_gene_rabinkarp(seq, size, dbt.db[i].sequence, 101);
       if(find == 1){
          say = i;//say degiskenine gen bulunan veriyi atiyoruz
          ids[j]=dbt.db[say].id;//ve ids arrayi icerisine yaziyoruz.
          j++;
-         count++;//toplamda bulunan birey sayisini tutmak icin.
+         count++;
       }
    }
    printf("\nTOPLAMDA BULUNAN KISI SAYISI: %d\n",count);
