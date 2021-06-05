@@ -6,7 +6,7 @@
 #include <time.h>
 
 int main(int argc, char* argv[]){
-  if(argc != 2){//komut satirindan eksik veya yanlis girilme durumunda uyari cikarir
+  if(argc != 2){ // komut satirindan eksik veya yanlis girilme durumunda program sonlanir
     printf("Programi kullanmak icin dosya ismi ile calistirin.\n");
     exit(1);
   }
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]){
   corr->db = calloc(DBSIZE, sizeof(cPerson));
   if(!corr->db) exit(1);
   corr->size = 0;
-  
-  strcpy(data, fileloc);
-  strcat(data, argv[1]);
-  Dtbase *dbt = read_person_file(data, corr);//girilen .txt dosyasindaki veriler structurea yerlestirilir
+  // arguman olarak verilen dosya ismi datalarin bulundugu lokasyon ile birlestirilir
+  strcpy(data, fileloc); // data = "../data/"
+  strcat(data, argv[1]); // data = "../data/argv[1]"
+  Dtbase *dbt = read_person_file(data, corr); // dosyadaki veriler uygun struct'lara yerlestirilir
 
   printf("\n========= PROJE BILGILERI\n");
   printf("Konu: Bioinformatics\n");
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
   printf("Zeynep Selin Uygun\n");
   printf("Ece Yucer");
   
-  while(1){ //switch case ile menu olusturduk.
+  while(1){ // switch case ile menu olusturduk.
     printf("\n\nYapmak istediginiz islemi seciniz.\n");
     printf(" 1:  Dosya bilgilerini gormek\n");
     printf(" 2:  Hatasiz verileri bastirmak\n");
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
         for(int i = 0; i < corr->size; ++i) printf("%3d) ID: %-5d ISIM: %s\n", i+1, corr->db[i].id, corr->db[i].name);
         printf("\nAyrintili DNA bilgisini gormek istediginiz kisinin sira numarasini giriniz.\n>> ");
         scanf("%d", &i);
-        while(i < 1 || i > corr->size){//sira numarasindan kucuk veye buyuk deger girme durumunda hata verir.
+        while(i < 1 || i > corr->size){ // sira numarasindan kucuk veye buyuk deger girme durumunda hata verir.
           printf("Lutfen gecerli bir secim yapiniz.\n>> ");
           scanf("%d", &i);
         }
@@ -76,8 +76,9 @@ int main(int argc, char* argv[]){
         printf("\nEn cok benzer kac tane veri istiyorsunuz?\n>> ");
         scanf("%d", &k);
         ids = find_similar_first(dna_seq, dbt, k);
-        for(int i = 0; i != k; ++i) find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq, 1);//girilen sayi kadar benzer kisi bilgisi
-                                                                                            //ve DNA sarmalini bastirir
+        for(int i = 0; i != k; ++i) find_binary(dbt, 0, dbt->size - 1, ids[i], dna_seq, 1); // parametre olarak verilen id'lere sahip
+                                                                                            // girilen sayi kadar benzer kisi bilgisi
+                                                                                            // ve DNA sarmalini bastirir
         free(ids);
         break;
 
@@ -91,7 +92,7 @@ int main(int argc, char* argv[]){
         scanf("%d", &x);
         if(x == 1){
           printf("\n");
-          for(i = 0; ids[i] != ids[i+1]; ++i) printf("ID[%5d  ]: %5d \n", i+1, ids[i]);//idse atanan tum IDleri bastirmak icin for dongusu
+          for(i = 0; ids[i] != ids[i+1]; ++i) printf("ID[%5d  ]: %5d \n", i+1, ids[i]); // idse atanan tum IDleri bastirmak icin for dongusu
           while(1){
             int y = 0;
             printf("\nAyrintili DNA bilgisini gormek istediginiz kisi varsa lutfen ID listesindeki sira numarasini giriniz. Yoksa 0'a basarak cikis yapabilirsiniz.\n>> ");
@@ -101,7 +102,8 @@ int main(int argc, char* argv[]){
               printf("\nListe boyutundan daha buyuk sira numarasi girisi saptandi. Menuye geri donuluyor\n");
               break;
             }
-            find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq, 0);//ayrintili kisi bilgisi ve DNA sarmalini bastirir.
+            find_binary(dbt, 0, dbt->size - 1, ids[y-1], gen_seq, 0); 
+            // parametre olarak verilen id'lere sahip ayrintili kisi bilgisi ve DNA sarmalini bastirir.
           }
         }free(ids);
         break;

@@ -14,33 +14,35 @@
  */
 int find_distance(char* seq1, char* seq2){
    int distance, replace, insert, delete;
-   int lenSeq1 = strlen(seq1), lenSeq2 = strlen(seq2);
-   int** matrix = malloc((lenSeq1+1) * sizeof(int *));
+   int lenSeq1 = strlen(seq1), lenSeq2 = strlen(seq2); // stringlerin uzunlugu bulunur
+   int** matrix = malloc((lenSeq1+1) * sizeof(int *)); // (lenSeq1+1)x(lenSeq2+1) matriks olusturulur ve yer acilir
    for(int i = 0; i <= lenSeq1; ++i) matrix[i] = malloc((lenSeq2+1) * sizeof(int));
-   for(int i = 0; i <= lenSeq1; ++i) matrix[i][0] = i;
+   for(int i = 0; i <= lenSeq1; ++i) matrix[i][0] = i; // diger seq'in bos olmasi durumundaki uzakliklar matrikste depolanir
    for(int j = 0; j <= lenSeq2; ++j) matrix[0][j] = j;
 
-   for(int i = 1; i <= lenSeq1; ++i){
+   // matrix[0][0] = 0(her iki seq de bos, uzaklik = 0)
+   for(int i = 1; i <= lenSeq1; ++i){ 
       for(int j = 1; j <= lenSeq2; ++j){
-         if(seq1[i-1] != seq2[j-1]){
-            if(i == j && i == 1){
+         if(seq1[i-1] != seq2[j-1]){ // ayni harf degillerse
+            if(i == j && i == 1){ // tek harflilerse uzaklik 1 olur (replace, tek secenek)
                matrix[i][j] = 1;
                continue;
-            }
-            replace = matrix[i-1][j-1];
-            delete = matrix[i-1][j];
-            insert = matrix[i][j-1];
+            } // tek harfli degillerse
+            replace = matrix[i-1][j-1]; // harfi degistirdik olarak dusunup, iki seqte de o indexteki harfi yoksayariz
+            delete = matrix[i-1][j]; //  bir seqteki harfi yok silmisiz olarak yoksayariz
+            insert = matrix[i][j-1]; // bir seqe harf eklemis olarak dusunup ortak harfi yoksayariz
+            // yoksayilan harfler disinda kalan seq'lerin distancelarini iclerinde bulundururlar
             replace = MIN(replace, insert);
-            replace = MIN(replace, delete);
-            matrix[i][j] = replace + 1;
-         }else{
-            matrix[i][j] = matrix[i-1][j-1];
+            replace = MIN(replace, delete); // 3 islemden en kucuk distancei buluruz
+            matrix[i][j] = replace + 1; // +1 ise 3 islemden herhangi birinin maliyetidir
+         }else{ // eger ayni harf ise o harfe bakmamiza gerek kalmaz
+            matrix[i][j] = matrix[i-1][j-1]; // o harfi yoksayariz, uzakliga bir etkisi yoktur
          }
       }
    }
-   distance = matrix[lenSeq1][lenSeq2];
+   distance = matrix[lenSeq1][lenSeq2]; // matriksin en sag altinda kalan sayi aradigimiz uzakliktir
    for(int i = 0; i <= lenSeq1; ++i) free(matrix[i]);
-   free(matrix);
+   free(matrix); // kullandigimiz alani temizliyoruz
    return distance;
 }
 
@@ -58,13 +60,13 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    Hash *next, *curr, *hash_node;
    int count = 0;
 
-   for(int p = 0; p < SIZE; p++){//hash table olusturulur
+   for(int p = 0; p < SIZE; p++){// hash table olusturulur
       hashtable[p] = calloc(1, sizeof(Hash));
       if(!hashtable[p]) exit(1);
       hashtable[p]->id = -1;
       hashtable[p]->next = NULL;
    } 
-   for(int i = 0; i < dbt->size; i++){//dna sequence uzaklik degerlerine gore hash table icersine yerlestirilir
+   for(int i = 0; i < dbt->size; i++){// dna sequence uzaklik degerlerine gore hash table icersine yerlestirilir
       int hashIndex = find_distance(seq1, dbt->db[i].sequence);
       hash_node = hashtable[hashIndex];
       if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
@@ -132,10 +134,10 @@ double finger_print(char* seq, int prime, int size){
 int find_gene_classic(char* seq, int size, char dnasequence[SIZE]){
 	int found = 0;
    for(int i = 0; i < SIZE; i++){
-      if(dnasequence[i] == seq[0]){//parametre olarak girilen gen dizsinin ilk harfi ile kiyaslama yapilir
+      if(dnasequence[i] == seq[0]){ // parametre olarak girilen gen dizsinin ilk harfi ile kiyaslama yapilir
          found = 1;
          for(int j = 1; j < size; j++){
-            if(dnasequence[i+j] != seq[j]){//eger ilk harfi ayni ise size kadar ilerler ve harf harf karsilastirir.
+            if(dnasequence[i+j] != seq[j]){ // eger ilk harfi ayni ise size kadar ilerler ve harf harf karsilastirir.
                found = 0;
                break;
             }
