@@ -52,21 +52,27 @@ int find_distance(char* seq1, char* seq2){
  * En benzer idler, uzakligi en dusuk olanlardir.
  */
 int* find_similar_first(char* seq1, Dtbase* dbt, int k){
+   //geri dondurulecek ilk k kisi icin yer acilir
    int* similar_ids = calloc(k, sizeof(int));
    Hash **hashtable = calloc(SIZE, sizeof(Hash*));
    if(!similar_ids || !hashtable) exit(1);
    Hash *next, *curr, *hash_node;
    int count = 0;
 
-   for(int p = 0; p < SIZE; p++){//hash table olusturulur
+   //kisilerin dna dizilim benzerliklerini yazmak uzere hash tablosu olusturulur
+   for(int p = 0; p < SIZE; p++){
       hashtable[p] = calloc(1, sizeof(Hash));
       if(!hashtable[p]) exit(1);
       hashtable[p]->id = -1;
       hashtable[p]->next = NULL;
    } 
-   for(int i = 0; i < dbt->size; i++){//dna sequence uzaklik degerlerine gore hash table icersine yerlestirilir
+   //dna dizilimlerinin uzaklik degerleri hash tablosu icerisine yerlestirilir
+   for(int i = 0; i < dbt->size; i++){
       int hashIndex = find_distance(seq1, dbt->db[i].sequence);
       hash_node = hashtable[hashIndex];
+      //eger a indeksli dugumun id degeri -1 ise daha once benzerlik/uzaklik
+      //degeri a olan hicbir kisinin id degeri hash tablosuna atanmamis demektir
+      //eger atanmissa diger a uzakligina sahip olan kisilerin id'si bagli liste olarak eklenir 
       if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
       else{
          for(curr = hash_node; curr->next != NULL; curr = curr->next);
@@ -77,6 +83,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
          curr->next = next;
       } 
    }
+   //hash tablosundaki ilk k kisinin id'leri alinir
    for(int j = 0; j < SIZE && count != k; j++){
       hash_node = hashtable[j];
       if(hash_node->id == -1) continue;
@@ -87,6 +94,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    }
    if(count < k) similar_ids = realloc(similar_ids, sizeof(int) * count);
    if(!similar_ids) exit(1);
+   //tahsis edilmis dinamik bellekler free'lenir
    for (int p = 0; p < SIZE; p++){
       curr = hashtable[p];
       if(curr){
