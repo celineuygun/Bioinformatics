@@ -63,14 +63,14 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
    for(int p = 0; p < SIZE; p++){// hash table olusturulur
       hashtable[p] = calloc(1, sizeof(Hash));
       if(!hashtable[p]) exit(1);
-      hashtable[p]->id = -1;
+      hashtable[p]->id = -1; // node'un bos oldugunu anlamamizi saglar
       hashtable[p]->next = NULL;
    } 
-   for(int i = 0; i < dbt->size; i++){// dna sequence uzaklik degerlerine gore hash table icersine yerlestirilir
+   for(int i = 0; i < dbt->size; i++){ // dna sequence uzaklik degerlerine gore hash table icersine yerlestirilir
       int hashIndex = find_distance(seq1, dbt->db[i].sequence);
       hash_node = hashtable[hashIndex];
-      if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
-      else{
+      if(hash_node->id == -1) hash_node->id = dbt->db[i].id; // o uzakliga sahip tek node ise
+      else{ // degilse yeni node icin yer acip bagli liste yapar
          for(curr = hash_node; curr->next != NULL; curr = curr->next);
          next = calloc(1, sizeof(Hash));
 	      if(!next) exit(1);
@@ -79,7 +79,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
          curr->next = next;
       } 
    }
-   for(int j = 0; j < SIZE && count != k; j++){
+   for(int j = 0; j < SIZE && count != k; j++){ // k sayisi kadar id'yi alana kadar devam eder
       hash_node = hashtable[j];
       if(hash_node->id == -1) continue;
       for(curr = hash_node; curr != NULL && count != k; curr = curr->next){
@@ -87,9 +87,9 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
          count++;
       }
    }
-   if(count < k) similar_ids = realloc(similar_ids, sizeof(int) * count);
+   if(count < k) similar_ids = realloc(similar_ids, sizeof(int) * count); // k sayisindan az varsa alani kucultur
    if(!similar_ids) exit(1);
-   for (int p = 0; p < SIZE; p++){
+   for (int p = 0; p < SIZE; p++){ // ayrilan alanlari bosaltiriz
       curr = hashtable[p];
       if(curr){
         while(curr->next != NULL){
@@ -163,13 +163,13 @@ int find_gene_rabinkarp(char* seq, int size, char dnasequence[SIZE], int prime){
    double hashseq = 0.0;
    double hashdna = 0.0;
    int i = 0, j = 0;
-   hashseq = finger_print(seq, prime, size);//parametre olarak girilen gen dizisinin hash degeri
+   hashseq = finger_print(seq, prime, size); // parametre olarak girilen gen dizisinin hash degeri
    for(i = 0; i < SIZE - size; i++){
-     hashdna = finger_print(&dnasequence[i], prime, size);//parametre olarak girilen size'a gore dna seq icinde 
-                                                          //olusturulan gen dizilerinin has degeri.
+     hashdna = finger_print(&dnasequence[i], prime, size); // parametre olarak girilen size'a gore dna seq icinde 
+                                                           // olusturulan gen dizilerinin has degeri.
       if(hashseq == hashdna){
          for(j = 0; j < size; j++){
-            if(dnasequence[i+j] != seq[j]){//hash degerinin esit olmasi durumunda harf harf karsilastirir.
+            if(dnasequence[i+j] != seq[j]){ // hash degerinin esit olmasi durumunda harf harf karsilastirir.
                break;
             }
          }
@@ -189,8 +189,8 @@ int *find_gene_persons(char* seq, int size, Dtbase dbt){
    for(i = 0; i < dbt.size; i++){
     find = find_gene_rabinkarp(seq, size, dbt.db[i].sequence, 101);
       if(find == 1){
-         say = i;//say degiskenine gen bulunan veriyi atiyoruz
-         ids[j]=dbt.db[say].id;//ve ids arrayi icerisine yaziyoruz.
+         say = i; // say degiskenine gen bulunan veriyi atiyoruz
+         ids[j]=dbt.db[say].id; // ve ids arrayi icerisine yaziyoruz.
          j++;
          count++;
       }

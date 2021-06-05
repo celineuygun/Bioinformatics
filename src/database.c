@@ -13,35 +13,35 @@ Dtbase* read_person_file(char* filename, Dtbasecor* corr){
    int *cor_ind = calloc(SIZE, sizeof(int));
    Dtbase* dbt = calloc(1, sizeof(Dtbase));
    if(!dbt) exit(1);
-   char buffer[BUFFER_SIZE];
+   char buffer[BUFFER_SIZE]; // satirlari icinde tutacak
    int lenBuf = 0, idNo, j = 0;
    char name[NSIZE], first[SIZE], second[SIZE];
    FILE *fp = fopen(filename, "r");
    if(!fp){printf("Dosya acilamadi. Dogru dosya ismini girdiginizden emin olun.\n"); exit(1);}
-   while(fgets(buffer, BUFFER_SIZE, fp) != NULL){
+   while(fgets(buffer, BUFFER_SIZE, fp) != NULL){ // satir satir okuyup buffer'a kaydeder
       int counter = 0;
       lenBuf = strlen(buffer);
-      buffer[lenBuf - 1] = (buffer[lenBuf - 1] == '\n') ? '\0' : buffer[lenBuf - 1];                       
-      sscanf(buffer, "%d %s %s %s", &idNo, name, first, second);
-      for(int i = 0; first[i] != '\0' || second[i] != '\0'; ++i){
+      buffer[lenBuf - 1] = (buffer[lenBuf - 1] == '\n') ? '\0' : buffer[lenBuf - 1]; // new line char'ini siler                     
+      sscanf(buffer, "%d %s %s %s", &idNo, name, first, second); // ilgili degiskene atar
+      for(int i = 0; first[i] != '\0' || second[i] != '\0'; ++i){ // stringleri karakter karakter karsilastirir
          if((first[i] == 'A' && second[i] == 'T') || (first[i] == 'T' && second[i] == 'A'));
          else if((first[i] == 'G' && second[i] == 'C') || (first[i] == 'C' && second[i] == 'G'));
-         else{
+         else{ // hatali ise
             if(counter == 0) dbt->corrupted++;
-            cor_ind[counter] = i;
-            counter++;
-            j--;
+            cor_ind[counter] = i; // hangi indexte hata oldugunu depolar
+            counter++; // o satirdaki hata sayisini bir artirir
+            j--; // satir sayisi ile paralel artan ve hatasiz veriler icin kullanilacak j degiskenini bir azaltir
          }
-         if(first[i+1] == '\0'|| second[i+1] == '\0'){
-            if(counter == 0){
+         if(first[i+1] == '\0'|| second[i+1] == '\0'){ // for sonlanmadan bir onceki dongude isek
+            if(counter == 0){ // satirda hata yoksa hatasiz struct'a kaydeder
                dbt->db[j].id = idNo;
                strcpy(dbt->db[j].name, name);
                strcpy(dbt->db[j].sequence, first);
                strcpy(dbt->db[j].pair, second);
                dbt->size++;
                continue;
-            }
-            for(int i = counter; i < SIZE; ++i) cor_ind[i] = -1;
+            }// satirda hata varsa hatali struct'a kaydeder
+            for(int i = counter; i < SIZE; ++i) cor_ind[i] = -1; // hatali indexler harici indexleri -1 yapar
             for(int i = 0; i < SIZE; ++i) corr->db[corr->size].cor_ind[i] = cor_ind[i];
             corr->db[corr->size].id = idNo;
             strcpy(corr->db[corr->size].name, name);
@@ -108,8 +108,8 @@ void print_double_helix_corr(cPerson db){
          if((j/4)%2 == 0)printf("%c----%c", db.sequence[j], db.pair[j]);
          else printf("%c----%c", db.pair[j], db.sequence[j]);
       }
-      for(c = 0; c < SIZE && db.cor_ind[c] != -1; ++c){
-         if(db.cor_ind[c] == j) printf("  <- HATA");
+      for(c = 0; c < SIZE && db.cor_ind[c] != -1; ++c){ // hata indexlerini depolayan array'i kontrol eder
+         if(db.cor_ind[c] == j) printf("  <- HATA"); // index eslesirse bu bilgiyi yazdirir
       }
       printf("\n");
    }
