@@ -73,7 +73,7 @@ int* find_similar_first(char* seq1, Dtbase* dbt, int k){
       int hashIndex = find_distance(seq1, dbt->db[i].sequence);
       hash_node = hashtable[hashIndex];
       //eger a indeksli dugumun id degeri -1 ise daha once benzerlik/uzaklik
-      //degeri a olan hicbir kisinin id degeri hash tablosuna atanmamis demektir
+      //degeri a olan kisinin id degeri hash tablosuna atanmamis demektir
       //eger atanmissa diger a uzakligina sahip olan kisilerin id'si bagli liste olarak eklenir 
       if(hash_node->id == -1) hash_node->id = dbt->db[i].id;
       else{
